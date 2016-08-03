@@ -1,0 +1,45 @@
+<template name="contact_us_page">
+<div class="container-fluid">
+  <img id="contactus" class="img-responsive" src="/images/contact_us.jpg" alt="contact_us">
+  <h2 class="text-center">
+    <span id="content_title">Contact Us</span>
+  </h2>
+  <form class="contact" id="contact_form">
+    <div class="row">
+      <div class="col-sm-5" id="address_details">
+        <p id="address_title">Contact us and we'll get back to you within 24 hours.</p>
+        <p style="margin: 0px">
+          <span  class="glyphicon glyphicon-map-marker"></span>
+          <span id="address_line1">Shop No 4, Vighnahar Shpg. Centre, </span>
+        </p>
+        <p id="address_line2">Plot No.1 + 1B,Sector - 21,</p>
+        <p id="address_line3">Nerul (E), Navi Mumbai-400706.</p>
+        <p id="address_phone"><span class="glyphicon glyphicon-phone"></span> +91 9820505076</p>
+        <p id="address_email"><span class="glyphicon glyphicon-envelope"></span> abc@successproperties.com</p>
+      </div>
+      <div class="col-sm-7">
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="company_name" name="company_name" placeholder="Company name" type="text">
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="contact_number" name="contact_number" placeholder="Contact number" type="text" pattern="\d+" maxlength="10">
+          </div>
+        </div>
+        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <button class="btn btn-default pull-right" type="submit">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</template>
