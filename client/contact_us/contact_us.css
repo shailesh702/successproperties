@@ -26,7 +26,9 @@ div#address_details{
 	padding-top: 0px;
 
 }
-.glyphicon{
+#contact_form .glyphicon-map-marker,
+#contact_form .glyphicon-phone,
+#contact_form .glyphicon-envelope{
 	margin-left: -20px;
 	padding: 10px 10px 0px 50px;
 	text-indent: 50px;

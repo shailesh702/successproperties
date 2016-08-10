@@ -1,7 +1,7 @@
 <template name="mainNav">
 
 
-<nav class="navbar-fixed-top" style="border:1px solid black;padding-bottom: 20px;">
+<nav class="navbar-fixed-top" style="background-color:#e5e5e5;padding-bottom: 20px;">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -11,29 +11,49 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="#"><span><span style="margin-left:10px;font-weight: bold;font-size: 30px;">SUCCESS</span> <br>Property Consultants</span></a>
+      <a class="navbar-brand" href="#"><span><span style="margin-left:25px;font-weight: bold;font-size: 25px;">SUCCESS</span> <br>Property Consultants</span></a>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-                  <li class="active">
-                  <li><a href="/">Home</a></li>
-                	<li><a href="/about_us">About Us</a></li>
-                  <li class="dropdown">
-                    <a href="/services" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <span class="caret"></span></a>
+    <ul class="nav navbar-nav navbar-right" style="padding-top: 5px;">
+                  <li class="active" style="display: inline;padding: 15px;">
+                  <li style="display: inline;">
+                    <a href="/" style="padding: 15px;text-decoration: none;color:#104E8B;">Home</a>
+                  </li>
+                	<li style="display: inline;">
+                    <a href="/about_us" style="text-decoration: none;padding: 15px;color:#104E8B;">About Us</a>
+                  </li>
+                  <li style="display: inline;" class="dropdown">
+                    <a href="/services" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="text-decoration: none;padding: 15px;color:#104E8B;">Services <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li>
-                          <a href="/rent">Rent</a>
+                      <li class="drpdown_rent">
+                          <a href="/rent" style="color:#104E8B;">Rent</a>
                       </li>
-                      <li>
-                          <a href="/buy">Buy</a>
+                      <li class="drpdown_buy">
+                          <a href="/buy" style="color:#104E8B;">Buy</a>
                       </li>                            
                     </ul>
+                    </li>
+                    <li style="display: inline;">
+                      <a href="/new_construction" style="text-decoration: none;padding: 15px;color:#104E8B;">New Contruction</a>
+                    </li>
+                    <li style="display: inline;">
+                      <a href="/contact" style="text-decoration: none;padding: 15px;color:#104E8B;">Contact us</a>
+                    </li>
+                    {{#if currentUser}}
+                    <li style="display: inline;">
+                      <a href="/fileUpload" style="text-decoration: none;padding: 15px;color:#104E8B;">File Upload</a>
+                    </li>
+                    {{/if}}
+                    <li style="display: inline;padding: 15px;margin-right: 160px;">
+                      {{> loginButtons }}
+                    </li>
+                  <!--<button type="button" class="btn btn-default navbar-btn">Login</button>-->
                   </li>
-                    <li><a href="/new_construction">New Contruction</a></li>
-                    <li><a href="/contact">Contact us</a></li>
-                    <li><a href="/fileUpload">File Upload</a></li>
-                  <button type="button" class="btn btn-default navbar-btn">Login</button>
-                  </li>
+                  <!--<li style="background-color: gray;padding: 15px;"><span style="border:1px solid red;">
+                  {{> loginButtons align="right"}}
+                  </span>
+                  </li>-->
 </ul>
+
   </div>
 </nav>
   {{>yield}}

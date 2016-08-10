@@ -1,12 +1,5 @@
 
-Template.home.events({
-  'submit form': function (e,tmpl) {
-    e.preventDefault();
-    
-    //$('#imgdesc').prepend();
-  }
-});
-Template.home.helpers({
+Template.rent.helpers({
   bannercontent:[
   { title:'Kalptaru Residencies',
     location:'Mumbai',

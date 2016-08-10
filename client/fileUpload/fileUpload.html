@@ -1,7 +1,9 @@
 <template name="fileUpload">
+
 <div id="container_root">
 	<div id="container_img">
 		<!--<img src="images/navi5.jpg" tooltip="corousel effect ">-->
+	<!-- Starting Carousel Effect  -->
 	<div>
 		<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="2200">
    
@@ -12,40 +14,45 @@
 		    </ol>
 
 		    <!-- Wrapper for slides -->
-		    <div id="boxshadow">
-		      <div class="carousel-inner" role="listbox">
-		        <div class="item active">
-		        <img id="img1" src= "/images/navi5.jpg" alt="New York">
-		        <!--<div class="carousel-caption">
-		            <h3></h3>
-		            <p></p>
-		        </div>-->      
-		     </div>
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+			        <img id="img1" src= "/images/navi5.jpg" alt="New York">
+			        <div class="carousel-caption">
+		            	<h5 style="text-align: right;color: color;font-weight: bolder;text-shadow: 5px 5px 5px gray;">1</h5>
+		            	<p></p>
+		        	</div>
+			    </div>
 
-	        <div class="item">
-	          <img id="img2" src="/images/navi6.jpg" alt="Chicago">
-	                
-	        </div>
-	      
-	        <div class="item">
-	          <img id="img3" src="/images/navi5.jpg" alt="Los Angeles">
-	               
-	        </div>
+		        <div class="item">
+		        	<img id="img2" src="/images/navi6.jpg" alt="Chicago">
+		        	<div class="carousel-caption">
+		        		<h3>2</h3>
+		        		<p></p>
+		        	</div>
+		        </div>
+		      
+		        <div class="item">
+		        	<img id="img3" src="/images/navi5.jpg" alt="Los Angeles">
+		        	<div class="carousel-caption">
+		            	<h3>2</h3>
+		            	<p></p>
+		        	</div>
+		        </div>
 	      	</div>
 
 	      	<!-- Left and right controls -->
 	      	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-	        <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="background-color: yellow;"></span>
-	        <span class="sr-only">Previous</span>-->
+	      		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      			<span class="sr-only">Previous</span>
 	      	</a>
 	      	<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-	        <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	        <span class="sr-only">Next</span>-->
+	      		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      			<span class="sr-only">Right</span>
 	      	</a> 
 	      	<!-- End of Left and right controls -->
-		    </div> <!-- End of boxshadow-->
 		</div>
 	</div>
+	<!-- End Carousel Effect  -->
 	</div>
 	<div id="container_desc">
 		<div id="container_desc_title">Description 1</div>
@@ -53,4 +60,78 @@
 	</div>
 </div>
 
+<div class="container-fluid" style="margin:20px 100px 0px 100px;">
+	<form role="form">
+	<fieldset>
+		<legend>Flie Upload Option</legend>
+	    <div class="row" style="">
+	    	<div class="form-group">
+		 		<div class="col-md-12">
+		    		<label class="sr-only" for="inputfileupload"></label>
+		    		<input type="file" id="input_file" multiple>
+		    	</div>
+			</div>
+			<br>
+			<div>
+				<div class="col-sm-2">
+					<label class="sr-only" for="preview"></label>
+					<input type="button" value="Preview">
+				</div>
+			</div>	
+		</div>
+	</fieldset>
+	</form>
+</div>
+
+
+<div style="margin: 10px 0px;"></div>
+	<div class="container" style="margin-bottom: 100px;border:1px solid black;">
+		<!--{{> fileUpload1}}-->
+	</div>
+
+</template>
+
+
+<template name="fileUpload1">
+	<form class="well">
+		<legend>
+			<h3>File Upload</h3>
+		</legend>
+		<input class="myFileInput" type="file" multiple>
+		<input class="submitFile" type="submit" value="Upload">
+		<table class="table" border="1px">
+			<thead>
+				<th>Name</th>
+				<th>Size</th>
+				<th style="width: 150px;">Upload Progress</th>
+				<th style="width: 300px;">Status</th>
+			</thead>
+			<!--<tbody>
+				{{#each files}}
+					{{> fileUploadRow}}
+				{{else}}
+					<tr>
+						<td><h5>No files selected</h5></td>
+					</tr>
+				{{/each}}
+			</tbody>-->
+		</table>
+	</form>
+</template>
+
+<template name="fileUploadRow">
+	<tr>
+		<td>{{name}}</td>
+		<td>{{size}}</td>
+		<td>
+			<div class="progress progress-striped {{uploadCompleteClass}}">
+				<div class="bar" style="width: {{uploadProgress}}%">
+					<span style="padding: 2px;float: left;color: #000;">
+						{{uploadProgress}}%
+					</span>
+				</div>
+			</div>
+		</td>
+		<td>{{status}}</td>
+	</tr>
 </template>

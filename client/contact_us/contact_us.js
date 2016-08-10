@@ -18,10 +18,10 @@ Template.contact_us_page.events({
 		var contact_number = event.target.contact_number.value;
 		var comment = event.target.comments.value;
 		//alert(comment);
-		Meteor.call("contact",name,email,company_name,contact_number,comment);
-		Meteor.call("sendemail",'shh_702@yahoo.co.in','jaiswal.shailesh7@gmail.com','Welcome message','This is test of email sending process.');
+		//Meteor.call("contact",name,email,company_name,contact_number,comment);
+		//Meteor.call("sendemail",'shh_702@yahoo.co.in','jaiswal.shailesh7@gmail.com','Welcome message','This is test of email sending process.');
 		//Toast.info("Mail sent successfully");
-		alert("Mail sent successfully");
+		//alert("Mail sent successfully");
 		event.target.name.value='';
 		event.target.email.value='';
 		event.target.company_name.value='';

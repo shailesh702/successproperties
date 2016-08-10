@@ -1,22 +1,45 @@
+/*body {
+    padding-top: 80px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+
+/*}
+
+
+
+
+
 #container_root{
-	margin-left:200px;
+float:left;
+	margin:50px;
 	height: 255px;
-	width: 610px;
+	width: 550px;
 	/*border:1px solid black;*/
-	box-sizing: border-box;
+	/*box-sizing: border-box;
 	position: relative;
 	border-radius: 20px;
 	box-shadow:3px 3px 10px gray, -3px -3px 10px gray;	
 }
+
+#container_root1{
+float:right;
+	margin:50px;
+	height: 255px;
+	width: 550px;
+	/*border:1px solid black;*/
+	/*box-sizing: border-box;
+	position: relative;
+	border-radius: 20px;
+	box-shadow:3px 3px 10px gray, -3px -3px 10px gray;	
+}
+
 #container_img{
-	height: 250px;
-	width: 350px;
+	height: 300px;
+	width: 310px;
 	position: absolute;
 	left:0;
 	border-radius: 20px 0px 0px 20px;
 	/*padding: 2px;*/
 	/*border:1px solid black;*/
-}
+/*}
 #container_img>img{
 	border-radius: 20px 0px 0px 20px;
 	height: 250px;
@@ -25,24 +48,31 @@
 #container_desc{
 	height: 250px;
 	width: 250px;
-	margin-left: 5px;
+	margin-left: 0px;
 	/*border:1px solid red;*/
-	position: absolute;
-	left: 350px;
+	/*position: absolute;
+	left: 320px;
 	border-radius: 0px 20px 20px 0px;
 }
 #container_desc_title
 {
-	height: 80px;
+	height: 60px;
 	width: 250px;
+left: 320px;
 	/*border:1px solid blue;*/
-	border-radius: 0px 20px 0px 0px;
+	/*border-radius: 0px 20px 0px 0px;
 }
-#container_description{
-	height: 170px;
+#container_description1{
+	height: 75px;
 	width: 250px;
 	/*border:1px solid blue;*/
-	border-radius: 0px 0px 20px 0px;
+	/*border-radius: 0px 0px 20px 0px;
+}
+#container_description2{
+	height: 115px;
+	width: 250px;
+	/*border:1px solid blue;*/
+/*	border-radius: 0px 0px 20px 0px;
 }
 #myCarousel{	
 	margin-left: 0px;
@@ -80,6 +110,4 @@
 }
 .carousel-fade .carousel-control {
   z-index: 2;
-}
-
-
+}*/

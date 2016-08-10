@@ -1,9 +1,12 @@
+body { padding-bottom: 70px;
+background:#4caf50 green; }
+
 .nav {
     
     
 }
 .navbar-brand
 {
-color:#4caf50;
+color:#104E8B;
 border-color: gray;
 }

@@ -43,8 +43,179 @@
   </div>
 </div>
 
+<div class="container-fluid" style="margin:20px 100px 100px 100px;">
+  <form role="form">
+    <fieldset>
+      <a href="#" class="btn btn-primary" role="button">Residential</a>
+      <a href="#" class="btn btn-primary" role="button">Commercial</a>
+                   
+      <div class="panel panel-primary">      
+        <div class="panel-body">
+          <div class="row" style="">
+            <div class="form-group">
+              <div class="radio">
+                <label>
+                  <span style="margin-left:15px;font-size: 15px;">
+                    <input type="radio" name="optradio">Rent
+                  </span>
+                </label>
+                </div>
+              <div class="radio">
+                <label><span style="margin-left:15px;font-size: 15px;">
+                <input type="radio" name="optradio">Buy</span></label>
+              </div>
+
+   
+       
+        <div class="col-sm-2">
+          <label class="sr-only" for="Area"></label>
+          <select class="form-control">
+            <option>Area</option>
+            <option>Navi Mumbai</option>
+            <option>Khopoli</option>
+          </select>
+        </div>
+        
+        <div class="col-sm-2">
+          <label class="sr-only" for="Room Type"></label>
+          <select class="form-control">
+            <option>1 RK</option>
+            <option>1 BHK</option>
+            <option>2 BHK</option>
+            <option>3 BHK</option>
+          </select>
+        </div>
+
+
+        <div class="col-sm-2">
+          <label class="sr-only" for="Area"></label>
+          <select class="form-control">
+            <option>Price From</option>
+            <option>Khopoli</option>
+          </select>
+        </div>
+
+        <div class="col-sm-2">
+          <label class="sr-only" for="Area"></label>
+          <select class="form-control">
+            <option>Price To</option>
+            <option>Khopoli</option>
+          </select>                  
+        </div>
+        <div class="col-sm-2 col-md-offset-2">
+          <label class="sr-only" for="search"></label>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</fieldset> 
+</form>  
+  
+</div>    
+<div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
+    <ul id="imgdesc" style="list-style-type: none;">
+      {{#each bannercontent}}
+        {{> banner}}
+      {{/each}}
+    </ul>
+</div>
 
 </template>
- 
+ <template name="banner">
+
+<li style="margin-top: 20px;">
+  <div id="container_root">
+  <div id="container_img">
+    <!--<img src="images/navi5.jpg" tooltip="corousel effect ">-->
+  <!-- Starting Carousel Effect  -->
+  <div>
+    <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="2200">
+   
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+              <img id="img1" src= "/images/navi5.jpg" alt="New York">
+              <div class="carousel-caption">
+                  <h5 style="text-align: right;color: color;font-weight: bolder;text-shadow: 5px 5px 5px gray;">1</h5>
+                  <p></p>
+              </div>
+          </div>
+
+            <div class="item">
+              <img id="img2" src="/images/navi6.jpg" alt="Chicago">
+              <div class="carousel-caption">
+                <h3>2</h3>
+                <p></p>
+              </div>
+            </div>
+          
+            <div class="item">
+              <img id="img3" src="/images/navi5.jpg" alt="Los Angeles">
+              <div class="carousel-caption">
+                  <h3>2</h3>
+                  <p></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Right</span>
+          </a> 
+          <!-- End of Left and right controls -->
+    </div>
+  </div>
+  <!-- End Carousel Effect  -->
+  </div>
+  <div id="container_desc">
+    <div id="container_desc_title">
+      <ul style="list-style-type: none;padding: 0;margin: 5px;">
+        <li>
+          <span style="font-weight: bold;color:#104E8B;font-size: 20px;">{{title}}</span>
+        </li>
+        <li>
+          <span style="font-weight: bold;color:gray;font-size: 16px;"> Location :</span>
+            <span>{{location}}</span>
+        </li>
+      </ul>
+    </div>
+    <div id="container_description">
+      <ul style="list-style-type: none;margin: 5px;padding: 0;">
+        <li>
+          <span style="font-weight: bold;color:gray;font-size: 16px;">Price :</span>
+          <span>{{price}}</span>
+        </li>
+        <li>
+          <span style="font-weight: bold;color:gray;font-size: 16px;">Rooms :</span>
+          <span>{{rooms}}</span>
+        </li>
+        <li>
+            <span style="font-weight: bold;color:gray;font-size: 16px;">Sq/Fts :</span>
+            <span>{{sq_ft}}</span>
+        </li>
+        <li>
+            <span style="font-weight: bold;color:gray;font-size: 16px;">Description :</span>
+            <span>{{description}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</li>
+</template>
 
 

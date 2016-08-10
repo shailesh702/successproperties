@@ -24,3 +24,9 @@ twbs:bootstrap
 mrt:toastjs
 email
 meteorhacks:ssr
+cfs:gridfs
+accounts-ui
+mpowaga:jquery-fileupload
+cfs:standard-packages
+cfs:filesystem
+accounts-password
