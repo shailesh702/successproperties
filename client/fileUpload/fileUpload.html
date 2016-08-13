@@ -1,6 +1,6 @@
 <template name="fileUpload">
 
-<div id="container_root">
+<div id="container_root" style="border:1px solid red;">
 	<div id="container_img">
 		<!--<img src="images/navi5.jpg" tooltip="corousel effect ">-->
 	<!-- Starting Carousel Effect  -->
@@ -54,7 +54,7 @@
 	</div>
 	<!-- End Carousel Effect  -->
 	</div>
-	<div id="container_desc">
+	<div id="container_desc_root">
 		<div id="container_desc_title">Description 1</div>
 		<div id="container_description">Description 2</div>
 	</div>
@@ -86,7 +86,7 @@
 
 <div style="margin: 10px 0px;"></div>
 	<div class="container" style="margin-bottom: 100px;border:1px solid black;">
-		<!--{{> fileUpload1}}-->
+		{{> fileUpload1}}
 	</div>
 
 </template>

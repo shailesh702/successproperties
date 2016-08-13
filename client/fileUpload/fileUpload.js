@@ -28,6 +28,8 @@ Template.fileUploadRow.helpers({
 		return this.uploadProgress == 100 ? 'progress-success':'';
 	}
 });*/
+
+/* Code below is referred from :- https://github.com/CollectionFS/Meteor-CollectionFS*/
 Template.fileUpload1.events({
   'change .myFileInput': function(event, template) {
     FS.Utility.eachFile(event, function(file) {
@@ -46,7 +48,8 @@ Template.fileUpload1.events({
     });
   },
   
-    'click input[type="submit"]': function () {
+  /*Below code is taken from :-  https://github.com/Sanjo/collectionFS_test/blob/ejson-file-reference/collectionFS_test.js*/
+  /*'click input[type="submit"]': function () {
       var file = $('#file').get(0).files[0];
       var fileObj = eventPhotos.insert(file);
       console.log('Upload result: ', fileObj);
@@ -56,4 +59,9 @@ Template.fileUpload1.events({
       });
     }
    
-});
+});*/
+Template.fileUpload1.helpers({
+    files: function () {
+      return Images.find();
+    }
+  });

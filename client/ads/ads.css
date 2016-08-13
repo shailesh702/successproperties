@@ -1,0 +1,16 @@
+
+#btn_ads_banner{
+	position: fixed;
+	bottom: 140px;
+	right: 0;	
+}
+#ads_banner{
+	height: 100px;
+	width: 200px;
+	border:1px solid black;
+	background-image: url("/images/navi5.jpg");
+	background-size: cover;
+	position: fixed;
+	bottom: 35px;
+	right: 0;
+}

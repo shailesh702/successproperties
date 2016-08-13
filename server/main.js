@@ -4,7 +4,7 @@ import { Email } from 'meteor/email';
 
 Meteor.startup(function(){
 	
-	process.env.MAIL_URL = 'smtp://email:password@smtp.gmail.com:465';
+	//process.env.MAIL_URL = 'smtp://email:password@smtp.gmail.com:465';
 	//process.env.MAIL_URL = 'smtp://shailesh%40sandbox8be928b4287040cdbc290e6a81af49c4.mailgun.org:123456@smtp.mailgun.org:465';
 	//console.log(process.env);
 });
@@ -36,18 +36,7 @@ Meteor.methods({
 	}
 });
 */
-Images.allow({
-  'insert': function () {
-    // add custom authentication code here
-    return true;
-  },
-  'update': function(){
-  	return true;
-  },
-  'remove': function(){
-  	return true;
-  }
-});
+
 
 Meteor.publish('images', function(){
 	return Images.find();
