@@ -1,6 +1,6 @@
 
 events = new Meteor.Collection('events');
-/*Flies = new Meteor.Collection(null);
+/*Files = new Meteor.Collection(null);
 
 Template.fileUpload1.events({
 	'change	input[type=file]': function (e,tmpl) {
@@ -57,9 +57,9 @@ Template.fileUpload1.events({
         name: 'event',
         file: fileObj
       });
-    }
+    }*/
    
-});*/
+});
 Template.fileUpload1.helpers({
     files: function () {
       return Images.find();

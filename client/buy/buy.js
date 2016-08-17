@@ -17,7 +17,7 @@ Template.search_ui.helpers({
 	}
 
 });
-/*Template.buy.helpers({
+Template.buy.helpers({
   bannercontent:[
   { title:'Kalptaru Residencies',
     location:'Mumbai',
@@ -32,4 +32,4 @@ Template.search_ui.helpers({
     sq_ft:'450',
   },
   ],
-})*/
+})

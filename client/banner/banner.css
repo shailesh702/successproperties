@@ -27,7 +27,7 @@
 	height: 255px;
 	width: 235px;
 	margin-left: 5px;
-	border:1px solid red;
+	/*border:1px solid red;*/
 	position: absolute;
 	left: 350px;
 	border-radius: 0px 20px 20px 0px;

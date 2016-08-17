@@ -1,5 +1,5 @@
 
-/*Template.rent.helpers({
+Template.rent.helpers({
   bannercontent:[
   { title:'Kalptaru Residencies',
     location:'Mumbai',
@@ -14,4 +14,4 @@
     sq_ft:'450',
   },
   ],
-})*/
+})
