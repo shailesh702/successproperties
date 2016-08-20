@@ -1,16 +1,58 @@
 
-#btn_ads_banner{
+/*#btn_ads_banner{
 	position: fixed;
 	bottom: 140px;
 	right: 0;	
-}
-#ads_banner{
-	height: 100px;
-	width: 200px;
+}*/
+div#ads_banner{
+	height: 140px;
+	width: 250px;
 	border:1px solid black;
-	background-image: url("/images/navi5.jpg");
+	/*background-image: url("/images/navi5.jpg");*/
 	background-size: cover;
 	position: fixed;
-	bottom: 40px;
+	bottom: 35px;
 	right: 0;
+	z-index: 1;
+	box-shadow: -2px -2px 5px gray;
+	background-color: lightgray;
 }
+p#hotdeal{
+	/*border:1px solid red;*/
+	background-color: lightgray	;
+	font-weight: bolder;
+	padding-left: 5px;
+	margin-bottom: 0px;
+}
+button#btn_ads_banner{
+	float: right;
+	height: 20px;
+}
+div#ads_banner > div#ad_details{
+	clear: right;
+	height: 116px;
+	width: 248px;
+	position: absolute;
+	bottom: 0px;
+
+	/*background-color: lightgray;*/
+	/*border:1px solid blue;*/
+}
+div#ad_details > img{
+	
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+div#ad_details > div#ad_description{
+	
+	height: 100px;
+	width: 140px;
+	position: absolute;
+	top: 5px;
+	left: 105px;
+}
+
+

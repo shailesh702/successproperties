@@ -1,0 +1,33 @@
+
+img#clients{
+	max-width: 100%;
+	height: 130px;
+	width:100%;
+}
+/*table#table_client{
+	margin-top: 50px;
+}*/
+
+div.polaroid {
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  padding: 10px;
+}
+div.polaroid > img{
+	width:100%;
+	height:150px;
+	border-bottom: 1px solid black;
+	padding-bottom: 5px;
+}
+div.polaroid > div.container-fluid{
+	padding-top: 10px;
+}
+div.polaroid > div.container-fluid > p{
+	font-size: 14px;
+	font-size: 13px;
+	font-weight: bold;
+}
+div#container_nha{
+	padding: 10px 0 0 0;
+}

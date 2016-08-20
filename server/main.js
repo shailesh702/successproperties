@@ -1,7 +1,6 @@
 import { Email } from 'meteor/email';
 //import './emailText.html';
 
-
 Meteor.startup(function(){
 	
 	//process.env.MAIL_URL = 'smtp://email:password@smtp.gmail.com:465';
@@ -40,4 +39,7 @@ Meteor.methods({
 
 Meteor.publish('images', function(){
 	return Images.find();
+});
+Meteor.publish('bannerdb', function(){
+	return bannerdb.find();
 });

@@ -1,5 +1,5 @@
 
-
+bannerdb = new Mongo.Collection('bannerdb'); 
 /*Reference taken from :- https://forums.meteor.com/t/looking-for-very-simple-file-upload-example/3728*/
 var imageStore = new FS.Store.GridFS("images");
 Images = new FS.Collection("images",{
