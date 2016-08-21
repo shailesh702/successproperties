@@ -1,5 +1,6 @@
 
 bannerdb = new Mongo.Collection('bannerdb'); 
+searchuidb = new Mongo.Collection('searchui');
 /*Reference taken from :- https://forums.meteor.com/t/looking-for-very-simple-file-upload-example/3728*/
 var imageStore = new FS.Store.GridFS("images");
 Images = new FS.Collection("images",{
@@ -26,6 +27,17 @@ Images.allow({
   }
 });
 
+bannerdb.allow({
+  'insert':function(){
+    return true;
+  },
+  'update':function(){
+    return true;
+  },
+  'remove':function(){
+    return true;
+  }
+})
 
 Meteor.methods({
 	/*uploadFile : function(file){

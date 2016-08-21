@@ -65,3 +65,40 @@ Template.fileUpload1.helpers({
       return Images.find();
     }
   });
+
+Template.fileUpload.events({
+  'submit':function(event){
+    //var $this = $(event.target);
+    var title = event.target.title.value;
+    var loc = event.target.location.value;
+    var price = event.target.price.value;
+    //alert(price);
+    var roomtype = event.target.rooms.value;
+    var sqft = event.target.sq_ft.value;
+    var category = event.target.rentbuy.value;
+    var txtdesc = event.target.description.value;
+    //var count = 0; 
+    //count++;
+    //alert(title,loc,price,roomtype,sqft,category,txtdesc);
+    //Meteor.call("insert",title,loc,price,roomtype,sqft,category,txtdesc);
+    
+    bannerdb.insert({
+        title: title,
+        location : loc,
+        price : price,
+        rooms : roomtype,
+        sq_ft : sqft,
+        category : category,
+        description : txtdesc,
+        uploadedAt: new Date().toLocaleString()
+      
+    });
+
+    Toast.info("Data insert successfully");
+  }
+});
+Template.fileUpload.helpers({
+  'bannercontent':function(){
+    return bannerdb.find({},{sort:{uploadedAt:-1},limit:1});
+  }
+});

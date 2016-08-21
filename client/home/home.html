@@ -58,13 +58,13 @@
               <div class="radio">
                 <label>
                   <span style="margin-left:15px;font-size: 15px;">
-                    <input type="radio" name="optradio" id="">Rent
+                    <input type="radio" name="optradio" value="rent" id="">Rent
                   </span>
                 </label>
               </div>
               <div class="radio">
                   <label><span style="margin-left:15px;font-size: 15px;">
-                  <input type="radio" name="optradio">Buy</span></label>
+                  <input type="radio" name="optradio" value="buy">Buy</span></label>
               </div>
         
               <div class="col-sm-2">
@@ -72,7 +72,7 @@
                 <select class="form-control" id="area_wise_filter">
                   <option disabled="disabled" selected="selected">Area</option>
                     {{#each areas}}
-                      <option value="{{this}}">{{this}}</option>
+                      <option value="{{area}}">{{area}}</option>
                     {{/each}}
                   <!--<option>Area</option>
                   <option>Navi Mumbai</option>
@@ -84,8 +84,8 @@
                 <label class="sr-only" for="Room Type"></label>
                 <select class="form-control" id="room_type_filter">
                   <option>Type</option>
-                    {{#each roomType}}
-                      <option value="{{this}}">{{this}}</option>
+                    {{#each room_type}}
+                      <option value="{{roomType}}">{{roomType}}</option>
                     {{/each}}
                   <!--<option>1 RK</option>
                   <option>1 BHK</option>
@@ -99,7 +99,16 @@
                 <label class="sr-only" for="Area"></label>
                 <select class="form-control">
                   <option>Price From</option>
-                  <option>1 lac</option>
+                  <!--<option>1 lac</option>-->
+                  {{#if rentbuy}}
+                    {{#each rpriceFrom}}
+                      <option value="{{rentpriceFrom}}">{{rentpriceFrom}}</option>
+                    {{/each}}
+                  {{else}}
+                    {{#each bpriceFrom}}
+                      <option>{{buypriceFrom}}</option>
+                    {{/each}}
+                  {{/if}}
                 </select>
               </div>
 
@@ -107,7 +116,12 @@
                 <label class="sr-only" for="Area"></label>
                 <select class="form-control">
                   <option>Price To</option>
-                  <option>1 cr</option>
+                  <!--{{#if rpriceTo}}-->
+                    {{#each rpriceTo}}
+                      <option value="{{rentpriceTo}}">{{rentpriceTo}}</option>
+                    {{/each}}
+                  <!--{{/if}}-->
+                  <!--<option>1 cr</option>-->
                 </select>                  
               </div>
               <div class="col-sm-2 col-md-offset-2">

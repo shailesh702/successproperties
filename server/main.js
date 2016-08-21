@@ -7,9 +7,9 @@ Meteor.startup(function(){
 	//process.env.MAIL_URL = 'smtp://shailesh%40sandbox8be928b4287040cdbc290e6a81af49c4.mailgun.org:123456@smtp.mailgun.org:465';
 	//console.log(process.env);
 });
-/*
+
 Meteor.methods({
-	sendemail : function(to,from,subject,text,name,email,company_name,contact_number,comment,event){
+	/*sendemail : function(to,from,subject,text,name,email,company_name,contact_number,comment,event){
 		
 		//check([to,from,subject,text],[String]);
 		//this.inblock();
@@ -32,9 +32,21 @@ Meteor.methods({
 			//html:'<strong>Look at that stack of cakes!</strong>'
 		});	
 		console.log("Mail sent");
-	}
+	}*/
+	/*insert : function(title,loc,price,roomtype,sqft,category,txtdesc){
+		bannerdb.insert({
+        title: title,
+        location : loc,
+        pric : price,
+        rooms : roomtype,
+        sq_ft : sqft,
+        category : category,
+        description : txtdesc,
+        uploadedAt: new Date().toLocaleString()
+    });		
+	}*/
 });
-*/
+
 
 
 Meteor.publish('images', function(){
@@ -43,3 +55,6 @@ Meteor.publish('images', function(){
 Meteor.publish('bannerdb', function(){
 	return bannerdb.find();
 });
+Meteor.publish('searchui',function(){
+	return searchuidb.find();
+})
