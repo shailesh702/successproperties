@@ -58,13 +58,13 @@
               <div class="radio">
                 <label>
                   <span style="margin-left:15px;font-size: 15px;">
-                    <input type="radio" name="optradio" value="rent" id="">Rent
+                    <input type="radio" name="optradio" value="rent" id="optradio_rent">Rent
                   </span>
                 </label>
               </div>
               <div class="radio">
                   <label><span style="margin-left:15px;font-size: 15px;">
-                  <input type="radio" name="optradio" value="buy">Buy</span></label>
+                  <input type="radio" name="optradio" value="buy" id="optradio_buy">Buy</span></label>
               </div>
         
               <div class="col-sm-2">
@@ -72,7 +72,7 @@
                 <select class="form-control" id="area_wise_filter">
                   <option disabled="disabled" selected="selected">Area</option>
                     {{#each areas}}
-                      <option value="{{area}}">{{area}}</option>
+                      <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   <!--<option>Area</option>
                   <option>Navi Mumbai</option>
@@ -85,7 +85,7 @@
                 <select class="form-control" id="room_type_filter">
                   <option>Type</option>
                     {{#each room_type}}
-                      <option value="{{roomType}}">{{roomType}}</option>
+                      <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   <!--<option>1 RK</option>
                   <option>1 BHK</option>
@@ -102,11 +102,11 @@
                   <!--<option>1 lac</option>-->
                   {{#if rentbuy}}
                     {{#each rpriceFrom}}
-                      <option value="{{rentpriceFrom}}">{{rentpriceFrom}}</option>
+                      <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   {{else}}
                     {{#each bpriceFrom}}
-                      <option>{{buypriceFrom}}</option>
+                      <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   {{/if}}
                 </select>
@@ -118,7 +118,7 @@
                   <option>Price To</option>
                   <!--{{#if rpriceTo}}-->
                     {{#each rpriceTo}}
-                      <option value="{{rentpriceTo}}">{{rentpriceTo}}</option>
+                      <option value="{{this}}">{{this}}</option>
                     {{/each}}
                   <!--{{/if}}-->
                   <!--<option>1 cr</option>-->
@@ -137,8 +137,8 @@
 </div>    
 <!-- End of Search ui -->
 <div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
-    <ul id="imgdesc" style="list-style-type: none;margin:0px;padding:0px 0px 0px 20px;">
-      {{#each bannercontent}}
+    <ul id="imgdesc" style="list-style-type: none;margin:0px 20px;padding:0px 0px 0px 20px;">
+      {{#each bannercontent}}        
         {{> banner}}
       {{/each}}
     </ul>

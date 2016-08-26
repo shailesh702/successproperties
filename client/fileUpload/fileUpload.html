@@ -1,6 +1,6 @@
 <template name="fileUpload">
 
-<div id="fileupload_preview" style="margin-bottom:0px;height: auto;width: 100%;">
+<div id="fileupload_preview" style="margin:0px 0px 0px 350px;height: auto;width: 100%;">
     <ul id="imgdesc" style="list-style-type: none;margin:0px;padding:0px 0px 0px 20px;">
       {{#each bannercontent}}
         {{> banner}}
@@ -8,10 +8,10 @@
     </ul>
 </div>
 
-<div class="container-fluid" style="margin:20px;padding-top:20px;">
+<div class="container-fluid" style="margin:20px 100px 20px 100px;padding:30px;border:1px solid black;">
 <form class="update_details">
 	<legend>
-		<h3>Description update:</h3>
+		<h3>Add Description Details:</h3>
 	</legend>
 	<div class="row">
 		<div class="col-sm-3 form-group">
@@ -33,7 +33,7 @@
             <input class="form-control" id="input_rent_buy" name="rentbuy" placeholder="Rent or Buy" type="text">
           </div>
           <div class="col-sm-3 form-group">
-          	<textarea class="form-control" id="txtarea_description" name="description" placeholder="description" rows="2"></textarea>
+          	<textarea class="form-control" id="txtarea_description" name="description" placeholder="description"  maxlength="78" rows="2"></textarea>
           </div>
     </div>
     <div class="row">

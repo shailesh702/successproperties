@@ -30,3 +30,5 @@ mpowaga:jquery-fileupload
 cfs:standard-packages
 cfs:filesystem
 accounts-password
+dburles:google-maps
+session
