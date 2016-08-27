@@ -1,12 +1,11 @@
-/*Template.banner.helpers({
-	'buyrent_category':function () {
-		var cat = bannerdb.find({},{_id:0,category:1});
-		if(cat){
-			//$("#container_desc_root_ul").css('color':'red');
-			return cat;
-		}
-	}
-});*/
+
+Template.banner.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+        self.subscribe('searchui');
+    });
+});
 Template.banner.events({
 	'click #update_delete_option>.glyphicon-remove': function(e){
 		var $this = $(e.target);
@@ -21,5 +20,5 @@ Template.banner.events({
 	},
 	'click #update_delete_option>.glyphicon-pencil': function(e){
 		alert("Are you sure you want to edit");
-	}
+	},
 });

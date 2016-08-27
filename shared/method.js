@@ -1,6 +1,6 @@
 
-bannerdb = new Mongo.Collection('bannerdb'); 
-searchuidb = new Mongo.Collection('searchui');
+//bannerdb = new Mongo.Collection('bannerdb'); 
+//searchuidb = new Mongo.Collection('searchui');
 /*Reference taken from :- https://forums.meteor.com/t/looking-for-very-simple-file-upload-example/3728*/
 /*var imageStore = new FS.Store.GridFS("images");
 Images = new FS.Collection("images",{
@@ -27,7 +27,7 @@ eventPhotos = new FS.Collection('eventPhotos', {
   }
 });*/
 
-bannerdb.allow({
+/*bannerdb.allow({
   'insert':function(){
     return true;
   },
@@ -37,8 +37,8 @@ bannerdb.allow({
   'remove':function(){
     return true;
   }
-})
-
+});
+*/
 //Meteor.methods({
 	/*uploadFile : function(file){
 		file.save('/images/uploads/');

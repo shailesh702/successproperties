@@ -77,7 +77,13 @@
 //     return Images.find(); 
 //   }
 // });
-
+Template.fileUpload.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+        self.subscribe('searchui');
+    });
+});
 
 Template.fileUpload.events({
   'submit':function(event){
@@ -114,9 +120,10 @@ Template.fileUpload.helpers({
   'bannercontent':function(){
     var banner_content =  bannerdb.find({},{sort:{uploadedAt:-1},limit:1});
     return banner_content;
+    //return bannerdb.find();
+  }
+});
 
-    //if()
-  },
   /*'rent_category':function(e){
       
       return bannerdb.find({category:"Buy"},{_id:0,category:1});     
@@ -136,7 +143,6 @@ Template.fileUpload.helpers({
         return  bannerdb.find({},{_id:0,category:1});
         //return category;        
     }*/
-});
 
 
 
@@ -147,7 +153,7 @@ Template.fileUpload.helpers({
 Template.fileUpload1.events({
  'change .myFileInput': function(event, template) {
     FS.Utility.eachFile(event, function(file) {
-
+        
       Images.insert(file, function (err, fileObj) {     
         if (err){
           // handle error

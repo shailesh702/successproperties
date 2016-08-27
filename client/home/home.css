@@ -3,3 +3,40 @@ body {
 }
 
 
+#myCarousel_home{	
+	margin-left: 0px;
+	padding: 0px;
+}
+#img1_home , #img2_home{
+	width: 100%;
+	height: 255px;
+	border-radius: 0px;
+}
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.item {
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+}
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.active {
+  opacity: 1;
+}
+#myCarousel_home>.left{
+	left: 0px;
+	border-radius: 0px;
+}
+
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.active.left,
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.active.right {
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+}
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.next.left,
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-inner #myCarousel_home>.prev.right {
+  opacity: 1;
+}
+#myCarousel_home>.carousel-fade #myCarousel_home>.carousel-control {
+  z-index: 2;
+}

@@ -7,7 +7,13 @@ $(document).on('click','.drpdown_rent',function(){
 $(document).on('click','.drpdown_buy',function(){
 	msg = "BUY";
 });
-
+Template.buy.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+        self.subscribe('searchui');
+    });
+});
 
 Template.search_ui.helpers({
 	'buy_helper': function buy_helper_func() {
@@ -22,5 +28,4 @@ Template.buy.helpers({
    'bannercontent':function(e){
     	return bannerdb.find({category:"Buy"},{sort:{uploadedAt:-1}});    	
     },
-    
 })

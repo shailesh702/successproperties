@@ -1,6 +1,6 @@
 
-bannerdb = new Mongo.Collection('bannerdb'); 
-searchuidb = new Mongo.Collection('searchui');
+// bannerdb = new Mongo.Collection('bannerdb'); 
+// searchuidb = new Mongo.Collection('searchui');
 
 Template.home.onCreated(function(){
     var self= this;
@@ -15,6 +15,7 @@ Template.ads.onCreated(function(){
     self.subscribe('bannerdb');
   });
 });
+
 
 Template.home.events({
   'submit form': function (e,tmpl) {
@@ -64,8 +65,8 @@ Template.home.events({
     //var split_r = a.split(",");
     //alert(split_r);
     //alert(area);
-    var disp_content = Session.get('test_area'); 
-    Session.set("test_area",test_area);  
+    //var disp_content = Session.get('test_area'); 
+    //Session.set("test_area",test_area);  
 
   },
   /*'change #area_wise_filter':function(e,tmpl){
@@ -134,13 +135,14 @@ Template.home.helpers({
       var disp_content = Session.get('test_area'); 
       //alert(disp_content);
 
-      if(disp_content=="Khopoli"){
-        return bannerdb.find({location:disp_content},{sort:{uploadedAt:-1}});
-      }
-      else{
+      // if(disp_content=="Khopoli"){
+      //   return bannerdb.find({location:disp_content},{sort:{uploadedAt:-1}});
+      // }
+      // else{
         //alert("No result found");
-        return bannerdb.find({},{sort:{uploadedAt:-1}});
-      }
+        var banner_content = bannerdb.find({},{sort:{uploadedAt:-1}});
+        return banner_content;
+      //}
     },
     'areas' :function(){
       //return ["Khopoli","Vashi"];
