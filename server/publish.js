@@ -6,4 +6,4 @@ Meteor.publish('bannerdb', function(){
 });
 Meteor.publish('searchui',function(){
 	return searchuidb.find();
-});
+})

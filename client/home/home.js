@@ -9,6 +9,7 @@ Template.home.onCreated(function(){
         self.subscribe('searchui');
     });
 });
+
 Template.ads.onCreated(function(){
   var self = this;
   this.autorun(function(){
@@ -16,12 +17,11 @@ Template.ads.onCreated(function(){
   });
 });
 
-
 Template.home.events({
   'submit form': function (e,tmpl) {
     e.preventDefault();
     var buyrent =  e.target.optradio.value;
-    alert(buyrent);
+    //alert(buyrent);
     // var buy="buy";
     // if (buyrent=="rent"){
     //   alert(buyrent);
@@ -65,8 +65,49 @@ Template.home.events({
     //var split_r = a.split(",");
     //alert(split_r);
     //alert(area);
-    //var disp_content = Session.get('test_area'); 
-    //Session.set("test_area",test_area);  
+    
+    var element = tmpl.find('input:radio[name=optradio]:checked');
+    // var t = $(element).val();
+    // if(t == "rent")
+    // {
+    //   alert("Hello");
+    // }
+    // else{alert("Else");}
+    
+
+    // var test_area = e.target.optradio.value;
+    // alert(test_area);
+    // var str = "Rent";
+    // if (test_area  == str)
+    // {
+    //   alert("Hello");
+    // }
+    // else
+    //   alert(typeof(test_area));
+    
+    var test_radio = e.target.optradio.value;
+    Session.set("test_radio",test_radio);
+    var test_area = $("#area_wise_filter").find(':selected').text();
+    Session.set("test_area",test_area);
+    //var t = Session.get("test_area");
+    //alert(t);
+    var test_roomtype = $("#room_type_filter").find(':selected').text();
+    Session.set("test_roomtype",test_roomtype);
+    var test_pricefrom = $("#price_from_filter").find(':selected').text();
+    Session.set("test_pricefrom",test_pricefrom);
+    var test_priceto = $("#price_to_filter").find(':selected').text();
+    Session.set("test_priceto",test_priceto);
+    // if(test == "Vashi")
+    // {
+    //   alert("Hello");  
+    // }
+    // else{alert("Else");}
+    
+
+    //alert(test_area);
+    // var disp_content = Session.get('test_area');
+
+    // Session.set("test_area",test_area);  
 
   },
   /*'change #area_wise_filter':function(e,tmpl){
@@ -100,54 +141,49 @@ Template.home.events({
 });
 
 Template.home.helpers({
-  /*bannercontent:[
-    { 
-      title:'Kalptaru Residencies Kalptaru Residencies',
-      location:'Khopoli',
-      price:'25lac',
-      rooms:'1BHK',
-      sq_ft:'350',
-    },
-    { 
-      title:'Raheja Residencies',
-      location:'Vashi',
-      price:'35lac',
-      rooms:'2BHK',
-      sq_ft:'450',
-    },
-    { 
-      title:'Hiranandani Residencies',
-      location:'Vashi',
-
-      price:'35lac',
-      rooms:'2BHK',
-      sq_ft:'450',
-    },
-    { 
-      title:'Akruti heights',
-      location:'Khopoli',
-      price:'25lac',
-      rooms:'1BHK',
-      sq_ft:'350',
-    },
-    ],*/
+  
     'bannercontent':function(){
-      var disp_content = Session.get('test_area'); 
+      var disp_radio = Session.get('test_radio');
+      var disp_testarea = Session.get('test_area'); 
+      var disp_roomtype = Session.get('test_roomtype');
+      var disp_pricefrom = Session.get('test_pricefrom');
+      var disp_priceto = Session.get('test_priceto');
       //alert(disp_content);
 
-      // if(disp_content=="Khopoli"){
-      //   return bannerdb.find({location:disp_content},{sort:{uploadedAt:-1}});
-      // }
-      // else{
-        //alert("No result found");
-        var banner_content = bannerdb.find({},{sort:{uploadedAt:-1}});
-        return banner_content;
-      //}
+      if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To"){
+        return bannerdb.find({},{sort:{uploadedAt:-1}});
+      }
+      else if(disp_testarea != "Area" && disp_roomtype != "Type"){
+        return bannerdb.find({location:disp_testarea,rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+      }
+      else if(disp_testarea != "Area")
+      {
+        var res = bannerdb.find({location:disp_testarea},{sort:{uploadedAt:-1}});
+        if(!res){
+          alert("No data found");
+          }
+        else{
+          return res;
+        }
+      }
+      else if(disp_roomtype != "Type")
+      {
+        return bannerdb.find({rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+      }
+      else if(disp_pricefrom != "Price From")
+      {
+        return bannerdb.find({price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+      }      
+      else if(disp_priceto != "Price To")
+      {
+        return bannerdb.find({price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+      }
+      else{
+        alert("No result found");
+      }
     },
     'areas' :function(){
       //return ["Khopoli","Vashi"];
-      //var $this = $(e.target);
-      //var id = $(this.id);
       var arearesult =  searchuidb.findOne({},{_id:0,area:1});
       return arearesult.area;
        // for (var i = 0; i < arearesult.area.length; i++) {
@@ -181,10 +217,10 @@ Template.home.helpers({
       // var id = this._id;
       // var test = searchuidb.find({_id:id});
       //var buy="buy";
-      if(buyrent=="Rent")
-        return buyrent;
-      // else
-      //   return false;
+      if(buyrent == "rent")
+        return true;
+      else
+        return false;
       //return searchuidb.find({},{_id:0,roomType:1});
     },
     'rpriceFrom':function(){

@@ -1,13 +1,7 @@
-Template.rent.onCreated(function(){
-    var self= this;
-    this.autorun( function() {
-        self.subscribe('bannerdb');
-        self.subscribe('searchui');
-    });
-});
+
 Template.rent.helpers({
- 
-  'bannercontent':function(e){
+  
+  'bannercontent':function(){
       return bannerdb.find({category:"Rent"},{sort:{uploadedAt:-1}});  
     },
     /*'areas' :function(){
@@ -39,4 +33,11 @@ Template.rent.helpers({
       return searchuidb.find({},{_id:0,buypriceTo:1});
     }*/
 
+})
+
+Template.rent.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+    });
 });

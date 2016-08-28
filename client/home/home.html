@@ -71,7 +71,7 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="Area"></label>
                 <select class="form-control" id="area_wise_filter">
-                  <option disabled="disabled" selected="selected">Area</option>
+                  <option selected="selected">Area</option>
                     {{#each areas}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
@@ -97,10 +97,10 @@
 
               <div class="col-sm-2">
                 <label class="sr-only" for="Area"></label>
-                <select class="form-control">
+                <select class="form-control" id="price_from_filter">
                   <option>Price From</option>
                   <!--<option>1 lac</option>-->
-                  {{#if rentbuy}}
+                  {{#if rentbuy}} 
                     {{#each rpriceFrom}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
@@ -114,13 +114,17 @@
 
               <div class="col-sm-2">
                 <label class="sr-only" for="Area"></label>
-                <select class="form-control">
+                <select class="form-control" id="price_to_filter">
                   <option>Price To</option>
-                  <!--{{#if rpriceTo}}-->
+                  {{#if rpriceTo}}
                     {{#each rpriceTo}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
-                  <!--{{/if}}-->
+                  {{else}}
+                    {{#each bpriceTo}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  {{/if}}
                   <!--<option>1 cr</option>-->
                 </select>                  
               </div>

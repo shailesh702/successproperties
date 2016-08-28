@@ -77,17 +77,11 @@
 //     return Images.find(); 
 //   }
 // });
-Template.fileUpload.onCreated(function(){
-    var self= this;
-    this.autorun( function() {
-        self.subscribe('bannerdb');
-        self.subscribe('searchui');
-    });
-});
+
 
 Template.fileUpload.events({
-  'submit':function(event){
-    //var $this = $(event.target);
+  'submit': function(event, template) {
+
     var title = event.target.title.value;
     var loc = event.target.location.value;
     var price = event.target.price.value;
@@ -96,11 +90,10 @@ Template.fileUpload.events({
     var sqft = event.target.sq_ft.value;
     var category = event.target.rentbuy.value;
     var txtdesc = event.target.description.value;
-    //var count = 0; 
-    //count++;
+    // //var count = 0; 
+    // //count++;
     //alert(title,loc,price,roomtype,sqft,category,txtdesc);
-    //Meteor.call("insert",title,loc,price,roomtype,sqft,category,txtdesc);
-    
+    // //Meteor.call("insert",title,loc,price,roomtype,sqft,category,txtdesc);
     bannerdb.insert({
         title: title,
         location : loc,
@@ -112,65 +105,42 @@ Template.fileUpload.events({
         uploadedAt: new Date().toLocaleString()
       
     });
-
     Toast.info("Data insert successfully");
   }
 });
+
 Template.fileUpload.helpers({
   'bannercontent':function(){
     var banner_content =  bannerdb.find({},{sort:{uploadedAt:-1},limit:1});
     return banner_content;
-    //return bannerdb.find();
   }
 });
 
-  /*'rent_category':function(e){
-      
-      return bannerdb.find({category:"Buy"},{_id:0,category:1});     
-      //for (var i = buyhelp.length - 1; i >= 0; i--) {
-      //  return buyhelp[i];
-      //}
-      if(buyhelp=="Buy"){
-        //$("#container_desc_root_ul").css({"color":"red"});        
-        $("#container_desc_root_ul").prepend("<div>Hello</div>");
-      }else{
-        //$("#container_desc_root_ul").css({"color":"blue"});
-        $("#container_desc_root_ul").prepend("<div>Else part</div>");
-      }*/
-      //return buyhelp;
-    //},
-    /*'rcategory':function(){
-        return  bannerdb.find({},{_id:0,category:1});
-        //return category;        
-    }*/
-
-
-
-
-
-
-
+Template.fileUpload.onCreated(function(){
+  var self= this;
+  this.autorun( function() {
+    self.subscribe('bannerdb');
+  });
+});
+  
 Template.fileUpload1.events({
- 'change .myFileInput': function(event, template) {
+ 'change.uploadFile': function(event, template) {
     FS.Utility.eachFile(event, function(file) {
-        
       Images.insert(file, function (err, fileObj) {     
         if (err){
-          // handle error
+            alert("Image not upload..");
         } else {
-          //var userId = Meteor.userId();
-          //var loc = event.target.location.value;
           var imagesURL = {
             'fileUpload1.image': '/cfs/files/images0/' + fileObj._id
           };
-          Meteor.users.insert(file, {$set: Template});
+          Meteor.users.insert(file, {$set: imagesURL});
         }
       });
     });
   }
 });
 
-imagesURL.fileUpload1.onCreated(function(){
+Template.fileUpload1.onCreated(function(){
   var self= this;
   this.autorun( function() {
     self.subscribe('images0');
@@ -182,4 +152,3 @@ Template.fileUpload1.helpers({
     return Images.find(); 
   }
 });
-
