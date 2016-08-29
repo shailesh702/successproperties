@@ -25,7 +25,7 @@
         		<div class="input-group-addon">$</div>
             	<input class="form-control" id="input_price" name="price" placeholder="price" type="text" required>
             	<div class="input-group-addon">
-					<select class="forn-control">
+					<select class="forn-control" id="select_price">
 						<option>K</option>
 						<option>Lac</option>
 						<option>Cr</option>						
@@ -34,14 +34,13 @@
             </div>
         </div>
         <div class="col-sm-3 form-group">
-        	<div class="input-group" >
+        	<div class="input-group">
 		        <input class="form-control" id="input_rooms" name="rooms" placeholder="room type" type="text" >
 		        <div class="input-group-addon">
-					<select class="forn-control">
-						<option>1 RK</option>
-						<option>1 BHK</option>
-						<option>2 BHK</option>
-						<option>3 BHK</option>
+					<select class="forn-control" id="select_room">
+						<option>RK</option>
+						<option>BHK</option>
+						
 					</select>		        	
 		        </div>
             </div>
@@ -50,7 +49,7 @@
         	<div class="input-group">
         		
             	<input class="form-control" id="input_sq_ft" name="sq_ft" placeholder="Only Numbers" type="text" required>
-            	<div class="input-group-addon">sq/ft</div>
+            	<div class="input-group-addon" id="sq_ft_content">sq/ft</div>
             </div>
     	</div>
           <!--<div class="col-sm-3 form-group">

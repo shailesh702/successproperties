@@ -84,10 +84,18 @@ Template.fileUpload.events({
 
     var title = event.target.title.value;
     var loc = event.target.location.value;
-    var price = event.target.price.value;
+    var price_value = event.target.price.value;
+    var select_price = $("#select_price").find(':selected').text();
+    var price = price_value+" "+select_price;
     //alert(price);
-    var roomtype = event.target.rooms.value;
-    var sqft = event.target.sq_ft.value;
+    var roomtype_value = event.target.rooms.value;
+    var select_roomtype = $("#select_room").find(':selected').text(); 
+    var roomtype = roomtype_value+" "+select_roomtype;
+    //alert(roomtype);
+    var sqft_value = event.target.sq_ft.value;
+    var select_sqft = $("#sq_ft_content").text();
+    var sqft = sqft_value+" "+select_sqft;
+    //alert(sqft);
     //var category = event.target.rentbuy.value;
     var category_res_comm = $("#option_resi_commercial").find(':selected').text();
     var category_buy_rent = $("#option_buy_rent").find(':selected').text();
@@ -109,6 +117,7 @@ Template.fileUpload.events({
       
     });
     Toast.info("Data insert successfully");
+    
   }
 });
 
