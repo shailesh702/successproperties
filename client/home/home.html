@@ -48,15 +48,15 @@
 <div class="container-fluid" style="margin:20px 100px 0px 100px;">
   <form role="form">
     <fieldset>
-      <a href="#" class="btn btn-primary" role="button">Residential</a>
-      <a href="#" class="btn btn-primary" role="button" style="margin-left: -2px;">Commercial</a>
+      <a href="#" class="btn btn-primary" id="btn_rent" role="button">RENT</a>
+      <a href="#" class="btn btn-primary" id="btn_buy" role="button" style="margin-left: -2px;">BUY</a>
                    
       <div class="panel panel-primary">      
         <div class="panel-body">
           <div class="row" style="">
             <div class="form-group">
               
-              <div class="radio">
+              <!--<div class="radio">
                 <label>
                   <span style="margin-left:15px;font-size: 15px;">
                     <input type="radio" name="optradio" value="rent" id="optradio_rent">Rent
@@ -67,7 +67,7 @@
                   <label><span style="margin-left:15px;font-size: 15px;">
                   <input type="radio" name="optradio" value="buy" id="optradio_buy">Buy</span></label>
               </div>
-        
+              -->
               <div class="col-sm-2">
                 <label class="sr-only" for="Area"></label>
                 <select class="form-control" id="area_wise_filter">
@@ -82,7 +82,7 @@
               </div>
             
               <div class="col-sm-2">
-                <label class="sr-only" for="Room Type"></label>
+                <label class="sr-only" for="Room_Type"></label>
                 <select class="form-control" id="room_type_filter">
                   <option>Type</option>
                     {{#each room_type}}
@@ -96,39 +96,49 @@
               </div>
 
               <div class="col-sm-2">
-                <label class="sr-only" for="Area"></label>
+                <label class="sr-only" for="price_from"></label>
                 <select class="form-control" id="price_from_filter">
                   <option>Price From</option>
                   <!--<option>1 lac</option>-->
-                  {{#if rentbuy}} 
-                    {{#each rpriceFrom}}
+                  <!--{{#if pricefrom}} -->
+                    {{#each pricefrom}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
-                  {{else}}
+                  <!--{{else}}
                     {{#each bpriceFrom}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
-                  {{/if}}
+                  {{/if}}-->
                 </select>
               </div>
 
               <div class="col-sm-2">
-                <label class="sr-only" for="Area"></label>
+                <label class="sr-only" for="price_to"></label>
                 <select class="form-control" id="price_to_filter">
                   <option>Price To</option>
-                  {{#if rpriceTo}}
-                    {{#each rpriceTo}}
+                  <!--{{#if priceto}}-->
+                    {{#each priceto}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
-                  {{else}}
+                  <!--{{else}}
                     {{#each bpriceTo}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
-                  {{/if}}
+                  {{/if}}-->
                   <!--<option>1 cr</option>-->
                 </select>                  
               </div>
-              <div class="col-sm-2 col-md-offset-2">
+
+              <div class="col-sm-2">
+                <label class="sr-only" for="property_category"></label>    
+                <select class="form-control" id="resi_commercial">
+                  <option disabled="disabled" selected="selected">All</option>
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                </select>
+              </div>
+
+              <div class="col-sm-2"> <!--col-md-offset-2">-->
                 <label class="sr-only" for="search"></label>
                 <button type="submit" class="btn btn-primary">Search</button>
               </div>

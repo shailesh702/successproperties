@@ -1,8 +1,22 @@
 
+Template.rent.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+    });
+});
+
 Template.rent.helpers({
   
   'bannercontent':function(){
-      return bannerdb.find({category:"Rent"},{sort:{uploadedAt:-1}});  
+    //var rent = "Rent";
+    //if (rent=="Rent") {
+      return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});  
+    // }
+    // else{
+    //   return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});  
+    // }
+
     },
     /*'areas' :function(){
       //return ["Khopoli","Vashi"];
@@ -34,10 +48,3 @@ Template.rent.helpers({
     }*/
 
 })
-
-Template.rent.onCreated(function(){
-    var self= this;
-    this.autorun( function() {
-        self.subscribe('bannerdb');
-    });
-});

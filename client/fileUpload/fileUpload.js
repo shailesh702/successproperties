@@ -88,7 +88,9 @@ Template.fileUpload.events({
     //alert(price);
     var roomtype = event.target.rooms.value;
     var sqft = event.target.sq_ft.value;
-    var category = event.target.rentbuy.value;
+    //var category = event.target.rentbuy.value;
+    var category_res_comm = $("#option_resi_commercial").find(':selected').text();
+    var category_buy_rent = $("#option_buy_rent").find(':selected').text();
     var txtdesc = event.target.description.value;
     // //var count = 0; 
     // //count++;
@@ -100,7 +102,8 @@ Template.fileUpload.events({
         price : price,
         rooms : roomtype,
         sq_ft : sqft,
-        category : category,
+        category_res_comm : category_res_comm,
+        category : category_buy_rent,
         description : txtdesc,
         uploadedAt: new Date().toLocaleString()
       

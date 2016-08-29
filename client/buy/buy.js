@@ -20,7 +20,7 @@ Template.search_ui.helpers({
 Template.buy.helpers({
  
    'bannercontent':function(e){
-    	return bannerdb.find({category:"Buy"},{sort:{uploadedAt:-1}});    	
+    	return bannerdb.find({category:"BUY"},{sort:{uploadedAt:-1}});    	
     },
     
 })

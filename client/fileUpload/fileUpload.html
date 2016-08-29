@@ -17,24 +17,63 @@
 		<div class="col-sm-3 form-group">
             <input class="form-control" id="input_title" name="title" placeholder="Title" type="text" required>
         </div>
-          <div class="col-sm-3 form-group">
-            <input class="form-control" id="input_location" name="location" placeholder="location" type="text" required>
-          </div>
-          <div class="col-sm-3 form-group">
-            <input class="form-control" id="input_price" name="price" placeholder="price" type="text" required>
-          </div>
-          <div class="col-sm-3 form-group">
-            <input class="form-control" id="input_rooms" name="rooms" placeholder="room type" type="text">
-          </div>
-          <div class="col-sm-3 form-group">
-            <input class="form-control" id="input_sq_ft" name="sq_ft" placeholder="sq/ft" type="text">
-          </div>
-          <div class="col-sm-3 form-group">
+        <div class="col-sm-3 form-group">
+        	<input class="form-control" id="input_location" name="location" placeholder="location" type="text" required>
+        </div>
+        <div class="col-sm-3 form-group">
+        	<div class="input-group">
+        		<div class="input-group-addon">$</div>
+            	<input class="form-control" id="input_price" name="price" placeholder="price" type="text" required>
+            	<div class="input-group-addon">
+					<select class="forn-control">
+						<option>K</option>
+						<option>Lac</option>
+						<option>Cr</option>						
+					</select>		        	
+		        </div>
+            </div>
+        </div>
+        <div class="col-sm-3 form-group">
+        	<div class="input-group" >
+		        <input class="form-control" id="input_rooms" name="rooms" placeholder="room type" type="text" >
+		        <div class="input-group-addon">
+					<select class="forn-control">
+						<option>1 RK</option>
+						<option>1 BHK</option>
+						<option>2 BHK</option>
+						<option>3 BHK</option>
+					</select>		        	
+		        </div>
+            </div>
+        </div>
+        <div class="col-sm-3 form-group">
+        	<div class="input-group">
+        		
+            	<input class="form-control" id="input_sq_ft" name="sq_ft" placeholder="Only Numbers" type="text" required>
+            	<div class="input-group-addon">sq/ft</div>
+            </div>
+    	</div>
+          <!--<div class="col-sm-3 form-group">
             <input class="form-control" id="input_rent_buy" name="rentbuy" placeholder="Rent or Buy" type="text">
-          </div>
-          <div class="col-sm-3 form-group">
-          	<textarea class="form-control" id="txtarea_description" name="description" placeholder="description"  maxlength="78" rows="2"></textarea>
-          </div>
+          </div>-->
+        <div class="col-sm-3">
+            <label class="sr-only" for="property_category"></label>    
+            <select class="form-control" id="option_resi_commercial">
+                <option>Residential</option>
+                <option>Commercial</option>	                
+            </select>
+       	</div>
+
+        <div class="col-sm-3">
+            <label class="sr-only" for="property_category"></label>    
+            <select class="form-control" id="option_buy_rent">
+                <option>RENT</option>
+                <option>BUY</option>	                
+            </select>
+       	</div>
+        <div class="col-sm-3 form-group">
+          	<textarea class="form-control" id="txtarea_description" name="description" placeholder="description"  maxlength="104" rows="2"></textarea>
+        </div>
     </div>
     <div class="row">
     	<div class="col-sm-2 form-group">

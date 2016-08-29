@@ -7,16 +7,24 @@
 		}
 	}
 });*/
+Template.banner.onCreated(function(){
+    var self= this;
+    this.autorun( function() {
+        self.subscribe('bannerdb');
+        //self.subscribe('searchui');
+    });
+});
+
 Template.banner.events({
 	'click #update_delete_option>.glyphicon-remove': function(e){
 		var $this = $(e.target);
 		//$($this).
 		alert("Are you sure you want to delete this Post");
-		var id = this._id;
-		alert(id);
+		//var id = this._id;
+		//alert(id);
 		//var dis = bannerdb.findOne({_id:id},{_id:1,title:1});
 		//alert(dis.category);
-		var dis = bannerdb.remove({_id:id});
+		//var dis = bannerdb.remove({_id:id});
 		Toast.info("Post deleted successfully");
 	},
 	'click #update_delete_option>.glyphicon-pencil': function(e){
@@ -28,17 +36,17 @@ Template.banner.events({
 		var sqFts = $("#banner_sq_ft").text();
 		var descriptions = $("#banner_description").text();
 
-		var txtTitle = $('<input id="txtTitle" type="text" value="' + title + '" />');
+		var txtTitle = $('<input id="txtTitle" type="text" value="' + title + '" /> ' );
 		$("#banner_title").replaceWith(txtTitle);
-		var txtLoc = $('<input id="txtLocation" type="text" value="' + loc + '" />');
+		var txtLoc = $('<input id="txtLocation" type="text" value="' + loc + '" style="width:100px"/>');
 		$("#banner_location").replaceWith(txtLoc);
-		var txtPrice = $('<input id="txtPrice" type="text" value="' + price + '" />');
+		var txtPrice = $('<input id="txtPrice" type="text" value="' + price + '" style="width:100px"/>');
 		$("#banner_price").replaceWith(txtPrice);
-		var txtRooms = $('<input id="txtRooms" type="text" value="' + rooms + '" />');
+		var txtRooms = $('<input id="txtRooms" type="text" value="' + rooms + '" style="width:100px"/>');
 		$("#banner_rooms").replaceWith(txtRooms);
-		var txtSqFts = $('<input id="txtSq_ft" type="text" value="' + sqFts + '" />');
+		var txtSqFts = $('<input id="txtSq_ft" type="text" value="' + sqFts + '" style="width:100px"/>');
 		$("#banner_sq_ft").replaceWith(txtSqFts);
-		var txtDescription = $('<input id="txtDescription" type="text" value="' + descriptions + '" />');
+		var txtDescription = $('<input id="txtDescription" type="text" value="' + descriptions + '" style="width:250px"/>');
 		$("#banner_description").replaceWith(txtDescription);
 
 		$("#update_delete_option>.glyphicon-pencil").prop('value', 'Save');
@@ -52,8 +60,7 @@ Template.banner.events({
 		var txtRooms = $("#txtRooms").val();
 		var txtSqFts = $("#txtSq_ft").val();
 		var txtDescriptions = $("#txtDescription").val();
-		//alert(this._id+""+txtTitle+""+txtLoc+""+txtPrice+""+txtRooms+""+txtSqFts+""+txtDescriptions);
-
+		
 		$("#update_delete_option>.glyphicon-file").prop('value', 'file');
 		$("#update_delete_option>.glyphicon-file").prop('class', 'pull-right glyphicon glyphicon-pencil');
 		$("#update_delete_option>.glyphicon-file").prop('id', 'edit');	
@@ -68,14 +75,16 @@ Template.banner.events({
 
 		var h1Loc = document.createElement('span');
 		var lblLoc= $(h1Loc).attr({
-			'id': "banner_location"
+			'id': "banner_location",
+
 		});
 		$('#txtLocation').replaceWith(lblLoc);
 		$("#banner_location").text(txtLoc);
 
 		var h1Price= document.createElement('span');
 		var lblPrice= $(h1Price).attr({
-			'id': "banner_price"
+			'id': "banner_price",
+			
 		});
 		$('#txtPrice').replaceWith(lblPrice);
 		$("#banner_price").text(txtPrice);
@@ -113,3 +122,14 @@ Template.banner.events({
 		});
 	}
 });
+/*Template.banner.helpers({
+	'buyrent_category':function () {
+		var cat = bannerdb.find({},{_id:0,category:1});
+		//cat = "rent";
+		if(cat.category == "Rent" || cat.category == "RENT"){
+			//$("#container_desc_root_ul").css('color':'red');
+
+			return true;
+		}
+	}
+});*/
