@@ -132,9 +132,12 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="property_category"></label>    
                 <select class="form-control" id="resi_commercial">
-                  <option disabled="disabled" selected="selected">All</option>
-                  <option>Residential</option>
-                  <option>Commercial</option>
+                  <option>All</option>
+                  {{#each rescomm}}
+                    <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                  <!--<option>Residential</option>
+                  <option>Commercial</option>-->
                 </select>
               </div>
 

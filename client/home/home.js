@@ -85,8 +85,12 @@ Template.home.events({
     // }
     // else
     //   alert(typeof(test_area));
-    Session.keys = {};
-
+    //Session.keys = {};
+    Session.set("test_area",undefined);
+    Session.set("test_roomtype",undefined);
+    Session.set("test_pricefrom",undefined);
+    Session.set("test_priceto",undefined);
+    Session.set("test_resi_comm",undefined);
     // var test_radio = e.target.optradio.value;
     // Session.set("test_radio",test_radio);
     var test_area = $("#area_wise_filter").find(':selected').text();
@@ -99,24 +103,28 @@ Template.home.events({
     Session.set("test_priceto",test_priceto);
     var test_resi_comm = $("#resi_commercial").find(':selected').text();
     Session.set("test_resi_comm",test_resi_comm);
+    //alert(test_resi_comm);
     // if(test == "Vashi")
     // {
     //   alert("Hello");  
     // }
     // else{alert("Else");}
-    alert(test_resi_comm);
+    //alert(test_resi_comm);
     
   },
   'click #btn_rent' : function(e){
     Session.keys={};
     //Session.set("buy_btn",undefined);
     var rent_btn = "rent";
+    //var t = $()
     //alert(rent_btn);
     Session.set("rent_btn",rent_btn);
   },
   'click #btn_buy' : function(e){
     Session.keys={};
-    //Session.set("buy_btn",undefined);
+    //var abc = "buy"
+    Session.set("buy_btn",undefined);
+    //alert(Session.get("buy_btn"));
     var buy_btn = "buy";
     //alert(buy_btn);
     Session.set("buy_btn",buy_btn);
@@ -160,51 +168,137 @@ Template.home.helpers({
       var disp_pricefrom = Session.get('test_pricefrom');
       var disp_priceto = Session.get('test_priceto');
       var disp_resi_comm = Session.get('test_resi_comm');
+      var disp_btn_rent = Session.get('rent_btn');
+      var disp_btn_buy = Session.get('buy_btn');
       //alert(disp_content);
       //return bannerdb.find({},{sort:{uploadedAt:-1}});
       //console.log(disp_testarea);
-      if(!disp_testarea)
+      //if(disp_btn_buy == "buy")
+      //{
+      if(!disp_btn_buy && !disp_btn_rent)
       {
-        //console.log("emptly");
+        console.log("disp_btn_buy:"+disp_btn_buy);
+        console.log("disp_btn_rent:"+disp_btn_rent);
         return bannerdb.find({},{sort:{uploadedAt:-1}});
       }
       else{
-      if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
-        return bannerdb.find({},{sort:{uploadedAt:-1}});
-      }
-      else if(disp_testarea != "Area" && disp_roomtype != "Type"){
-        return bannerdb.find({location:disp_testarea,rooms:disp_roomtype},{sort:{uploadedAt:-1}});
-      }
-      else if(disp_testarea != "Area")
-      {
-        var res = bannerdb.find({location:disp_testarea},{sort:{uploadedAt:-1}});
-        if(!res){
-          alert("No data found");
+        if(disp_btn_rent == 'rent'){
+          console.log("else : "+disp_btn_rent);
+          console.log("disp_testarea:"+disp_testarea);
+          if(!disp_testarea && !disp_roomtype){
+            return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});  
           }
+          else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
+            return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_roomtype != "Type"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_resi_comm != "All"){
+            return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area")
+          {
+            var res = bannerdb.find({location:disp_testarea,category:"RENT"},{sort:{uploadedAt:-1}});
+            if(!res){
+              alert("No data found");
+              }
+            else{
+              return res;
+            }
+          }
+          else if(disp_roomtype != "Type")
+          {
+            return bannerdb.find({rooms:disp_roomtype,category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_pricefrom != "Price From")
+          {
+            return bannerdb.find({category:"RENT",price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+          }      
+          else if(disp_priceto != "Price To")
+          {
+            return bannerdb.find({category:"RENT",price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_resi_comm != "All")
+          {
+            return bannerdb.find({category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}}); 
+          }
+          else{
+            alert("No result found");
+          }
+        }
+        // End of IF of RENT
+        // Start of ELSE of BUY
         else{
-          return res;
+          //Session.set('btn_buy',undefined);
+          console.log("else part BUY btn");
+          if(!disp_testarea && !disp_roomtype){
+            return bannerdb.find({category:"BUY"},{sort:{uploadedAt:-1}});  
+          }
+          else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
+            return bannerdb.find({category:"BUY"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_roomtype != "Type"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_testarea != "Area" && disp_resi_comm != "All"){
+            var result = bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
+            //console.log(result);
+            
+            if(result == null)
+            {console.log("No data found");}
+            return result;
+          }
+          else if(disp_testarea != "Area")
+          {
+            var res = bannerdb.find({location:disp_testarea,category:"BUY"},{sort:{uploadedAt:-1}});
+            if(res){
+              //if(res.location==null){
+              //console.log(res.location);
+              //}
+              return res;
+              //}  
+              //else{
+              //alert("No data found");
+              //console.log("No data found");
+              //}
+            }
+            else{
+            console.log("No data");
+            }
+          }
+          else if(disp_roomtype != "Type")
+          {
+            return bannerdb.find({rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_pricefrom != "Price From")
+          {
+            return bannerdb.find({category:"BUY",price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+          }      
+          else if(disp_priceto != "Price To")
+          {
+            return bannerdb.find({category:"BUY",price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_resi_comm != "All")
+          {
+            return bannerdb.find({category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}}); 
+          }
+          else{
+            alert("No result found");
+          }
         }
       }
-      else if(disp_roomtype != "Type")
-      {
-        return bannerdb.find({rooms:disp_roomtype},{sort:{uploadedAt:-1}});
-      }
-      else if(disp_pricefrom != "Price From")
-      {
-        return bannerdb.find({price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
-      }      
-      else if(disp_priceto != "Price To")
-      {
-        return bannerdb.find({price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
-      }
-      else if(disp_resi_comm != "All")
-      {
-        return bannerdb.find({category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}}); 
-      }
-      else{
-        alert("No result found");
-      }
-    }
+    // }
+      // else{
+      //   console.log("Else part : rent button");
+      // }
+    
     //disp_testarea = "";
          
     },
@@ -338,7 +432,10 @@ Template.home.helpers({
       var buypriceto = searchuidb.findOne({},{_id:0,buypriceTo:1});
       return buypriceto.buypriceTo;
     },*/
-    
+    'rescomm':function(){
+      var residential_commercial = searchuidb.findOne({},{_id:0,residential_commercial:1});
+      return residential_commercial.residential_commercial;
+    }
 });
 
 

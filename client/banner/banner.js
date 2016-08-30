@@ -19,7 +19,11 @@ Template.banner.events({
 	'click #update_delete_option>.glyphicon-remove': function(e){
 		var $this = $(e.target);
 		//$($this).
-		alert("Are you sure you want to delete this Post");
+		// prompt("Are you sure you want to delete this Post");
+		// if(true)
+		// {
+		// 	alert("ok");
+		// }
 		//var id = this._id;
 		//alert(id);
 		//var dis = bannerdb.findOne({_id:id},{_id:1,title:1});
