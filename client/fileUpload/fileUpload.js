@@ -86,15 +86,16 @@ Template.fileUpload.events({
     var loc = event.target.location.value;
     var price_value = event.target.price.value;
     var select_price = $("#select_price").find(':selected').text();
-    var price = price_value+" "+select_price;
-    //alert(price);
+    var price = price_value;
+    var price_char = " "+select_price;
+    //alert(price_value+price_char);
     var roomtype_value = event.target.rooms.value;
     var select_roomtype = $("#select_room").find(':selected').text(); 
     var roomtype = roomtype_value+" "+select_roomtype;
     //alert(roomtype);
     var sqft_value = event.target.sq_ft.value;
-    var select_sqft = $("#sq_ft_content").text();
-    var sqft = sqft_value+" "+select_sqft;
+    //var select_sqft = $("#sq_ft_content").text();
+    var sqft = sqft_value;//+" "+select_sqft;
     //alert(sqft);
     //var category = event.target.rentbuy.value;
     var category_res_comm = $("#option_resi_commercial").find(':selected').text();
@@ -104,7 +105,7 @@ Template.fileUpload.events({
     // //count++;
     //alert(title,loc,price,roomtype,sqft,category,txtdesc);
     // //Meteor.call("insert",title,loc,price,roomtype,sqft,category,txtdesc);
-    bannerdb.insert({
+    /*bannerdb.insert({
         title: title,
         location : loc,
         price : price,
@@ -115,7 +116,7 @@ Template.fileUpload.events({
         description : txtdesc,
         uploadedAt: new Date().toLocaleString()
       
-    });
+    });*/
     Toast.info("Data insert successfully");
     
   }

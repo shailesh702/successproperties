@@ -101,6 +101,9 @@ Template.home.events({
     Session.set("test_pricefrom",test_pricefrom);
     var test_priceto = $("#price_to_filter").find(':selected').text();
     Session.set("test_priceto",test_priceto);
+    var arr_price = test_priceto.split(" ");
+
+    alert(arr_price[0]+arr_price[1]);
     var test_resi_comm = $("#resi_commercial").find(':selected').text();
     Session.set("test_resi_comm",test_resi_comm);
     //alert(test_resi_comm);
@@ -179,7 +182,51 @@ Template.home.helpers({
       {
         console.log("disp_btn_buy:"+disp_btn_buy);
         console.log("disp_btn_rent:"+disp_btn_rent);
-        return bannerdb.find({},{sort:{uploadedAt:-1}});
+        //return bannerdb.find({},{sort:{uploadedAt:-1}});
+        if(!disp_testarea && !disp_roomtype){
+            return bannerdb.find({},{sort:{uploadedAt:-1}});  
+        }
+        else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
+          return bannerdb.find({},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_testarea != "Area" && disp_roomtype != "Type"){
+            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_testarea != "Area" && disp_resi_comm != "All"){
+            return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_testarea != "Area")
+        {
+            var res = bannerdb.find({location:disp_testarea},{sort:{uploadedAt:-1}});
+            if(!res){
+              alert("No data found");
+            }
+            else{
+              return res;
+            }
+        }
+        else if(disp_roomtype != "Type")
+        {
+            return bannerdb.find({rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_pricefrom != "Price From")
+        {
+            return bannerdb.find({price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+        }      
+        else if(disp_priceto != "Price To")
+        {
+          return bannerdb.find({price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+        }
+        else if(disp_resi_comm != "All")
+        {
+            return bannerdb.find({category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}}); 
+        }
+        else{
+          alert("No result found");
+        }
       }
       else{
         if(disp_btn_rent == 'rent'){
