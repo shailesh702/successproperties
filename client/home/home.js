@@ -97,13 +97,28 @@ Template.home.events({
     Session.set("test_area",test_area);
     var test_roomtype = $("#room_type_filter").find(':selected').text();
     Session.set("test_roomtype",test_roomtype);
+    var arr_roomtype = test_roomtype.split(" ");
+    var roomtype_number = arr_roomtype[0];
+    var roomtype_char = arr_roomtype[1];
+    Session.set("roomtype_number",roomtype_number);
+    Session.set("roomtype_char",roomtype_char);
+
     var test_pricefrom = $("#price_from_filter").find(':selected').text();
     Session.set("test_pricefrom",test_pricefrom);
+    var arr_price_from = test_pricefrom.split(" ");
+    var price_from_number = arr_price_from[0];
+    var price_from_char = arr_price_from[1];
+    Session.set("price_from_number",price_from_number);
+    Session.set("price_from_char",price_from_char);
+    
     var test_priceto = $("#price_to_filter").find(':selected').text();
     Session.set("test_priceto",test_priceto);
-    var arr_price = test_priceto.split(" ");
-
-    alert(arr_price[0]+arr_price[1]);
+    var arr_price_to = test_priceto.split(" ");
+    var price_to_number = arr_price_to[0];
+    var price_to_char = arr_price_to[1];
+    Session.set("price_to_number",price_to_number);
+    Session.set("price_to_char",price_to_char);
+    //alert(arr_price[0]+arr_price[1]);
     var test_resi_comm = $("#resi_commercial").find(':selected').text();
     Session.set("test_resi_comm",test_resi_comm);
     //alert(test_resi_comm);
@@ -113,6 +128,11 @@ Template.home.events({
     // }
     // else{alert("Else");}
     //alert(test_resi_comm);
+    $("#area_wise_filter").val("Area");
+    $("#room_type_filter").val("Type");
+    $("#price_from_filter").val("Price From");
+    $("#price_to_filter").val("Price To");
+    $("#resi_commercial").val("All");
     
   },
   'click #btn_rent' : function(e){
@@ -168,8 +188,17 @@ Template.home.helpers({
       //var disp_radio = Session.get('test_radio');
       var disp_testarea = Session.get('test_area'); 
       var disp_roomtype = Session.get('test_roomtype');
+      var disp_roomtype_number = Session.get('roomtype_number');
+      var disp_roomtype_char = Session.get('roomtype_char');
+      
       var disp_pricefrom = Session.get('test_pricefrom');
+      var disp_pricefrom_num = Session.get('price_from_number');
+      var disp_pricefrom_char = Session.get('price_from_char');
+
       var disp_priceto = Session.get('test_priceto');
+      var disp_priceto_num = Session.get('price_to_number');
+      var disp_priceto_char = Session.get('price_to_char');
+
       var disp_resi_comm = Session.get('test_resi_comm');
       var disp_btn_rent = Session.get('rent_btn');
       var disp_btn_buy = Session.get('buy_btn');
@@ -198,6 +227,17 @@ Template.home.helpers({
         else if(disp_testarea != "Area" && disp_resi_comm != "All"){
             return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
         }
+        else if (disp_pricefrom != "Price From" && disp_priceto != "Price To") {
+          return bannerdb.find(
+            {
+              $and : [
+                {"price.price_value":{$gte:disp_pricefrom_num}},
+                {"price.price_value":{$lte:disp_priceto_num}}
+              ]
+            },
+            {sort:{uploadedAt:-1}}
+          );
+        }
         else if(disp_testarea != "Area")
         {
             var res = bannerdb.find({location:disp_testarea},{sort:{uploadedAt:-1}});
@@ -210,15 +250,87 @@ Template.home.helpers({
         }
         else if(disp_roomtype != "Type")
         {
-            return bannerdb.find({rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},{sort:{uploadedAt:-1}});
         }
         else if(disp_pricefrom != "Price From")
         {
-            return bannerdb.find({price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+            if (disp_pricefrom_char == "Lac") {
+              return bannerdb.find(
+                {
+                  $and : [
+                    {$or : [{"price.price_value":{$gte:disp_pricefrom_num}}]},
+                    {$or:[{"price.select_price":disp_pricefrom_char},{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]}
+                  ],
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else{
+              return bannerdb.find(
+                {
+                  "price.price_value":{$gte:disp_pricefrom_num},
+                  "price.select_price":disp_pricefrom_char
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+                );
+            }
+            //return bannerdb.find({"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},{sort:{uploadedAt:-1}});
         }      
         else if(disp_priceto != "Price To")
         {
-          return bannerdb.find({price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+          if(disp_priceto_char == "K"){
+            return bannerdb.find({"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});
+          }
+          else if(disp_priceto_char == "Lac"){
+            //return bannerdb.find({"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});    
+            console.log("Lac or less than");            
+            return bannerdb.find(
+                { 
+                  //$and:[
+                  //{$or:[{"price.price_value":{$exists:true}},{"price.select_price":"Cr"}]},
+                  $and:[
+                      {$or : [{"price.price_value":{$lte:disp_priceto_num}}]},
+                      {$or:[{"price.select_price":disp_priceto_char},{"price.price_value":{$lte:1}},{"price.select_price":"K"}]}
+                      //{$or: [{"price.price_value":{$lte:1}},{"price.select_price":"K"}]}
+                      //{"price.select_price":"Cr"}
+                    ]
+                  //$and:[{disp_priceto_char:"K"}]
+                  //]
+                  //"price.select_price":"K",
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+                );
+          }
+          else{
+            console.log("price Cr or less than"); 
+            return bannerdb.find(
+              { $and:[
+                  {$or : [{"price.price_value":{$lte:disp_priceto_num}}]},
+                  {$or : [{"price.select_price":disp_priceto_char},{"price.select_price":"Lac"},{"price.select_price":"K"}]},
+                  //{"price.select_price":"Cr"}
+                ]
+              },
+              { 
+                sort:{uploadedAt:-1}
+              });
+                
+                //   "price.price_value":{$lte:disp_priceto_num},
+                //   "price.select_price":disp_priceto_char,
+                //   $and:[{$or:[{disp_priceto_char:"K"},{disp_priceto_char:"Lac"}]}]
+                  
+                // },
+                // {
+                //   sort:{uploadedAt:-1}
+                // }
+                // );
+          }
+
         }
         else if(disp_resi_comm != "All")
         {
@@ -228,7 +340,7 @@ Template.home.helpers({
           alert("No result found");
         }
       }
-      else{
+      else{   // code for RENT
         if(disp_btn_rent == 'rent'){
           console.log("else : "+disp_btn_rent);
           console.log("disp_testarea:"+disp_testarea);
@@ -259,15 +371,91 @@ Template.home.helpers({
           }
           else if(disp_roomtype != "Type")
           {
-            return bannerdb.find({rooms:disp_roomtype,category:"RENT"},{sort:{uploadedAt:-1}});
+            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category:"RENT"},{sort:{uploadedAt:-1}});
           }
           else if(disp_pricefrom != "Price From")
           {
-            return bannerdb.find({category:"RENT",price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+            if(disp_pricefrom_char == "K"){
+              return bannerdb.find({
+                  $and:[
+                        {$or :[{"price.price_value":{$gte:disp_pricefrom_num}}]},
+                        {$or: [{"price.select_price":disp_pricefrom_char}]},
+                        {$and: [{"price.price_value":{$gte:1}},{"price.select_price":"Lac"}]},
+                        {$and: [{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]},
+                        {category:"RENT"}
+                      ]
+                  },
+                  {sort:{uploadedAt:-1}}
+                  );
+            }
+            else if(disp_priceto_char == "Lac"){
+              return bannerdb.find(
+              {
+                $or:[
+                  {category:"RENT"},
+                  {"price.price_value":{$gte:disp_pricefrom_num}},
+                  {"price.select_price":disp_pricefrom_char},
+                  {"price.select_price":"Cr"}
+                  ]
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{
+              return bannerdb.find({
+                "price.price_value":{$gte:disp_pricefrom_num},
+                "price.select_price":disp_pricefrom_char,
+                category:"RENT"
+              },
+              {
+                sort:{uploadedAt:-1}
+              });
+            }
           }      
           else if(disp_priceto != "Price To")
           {
-            return bannerdb.find({category:"RENT",price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+            if (disp_priceto_char == "K") {
+              return bannerdb.find({
+                $or:[
+                {"price.price_value":{$lte:disp_priceto_num}},
+                {"price.select_price":disp_priceto_char},
+                {category:"RENT"}
+                ]
+              },
+              {
+                sort:{uploadedAt:-1}
+              });
+            }
+            else if(disp_priceto_char == "Lac")
+            {
+              return bannerdb.find({
+                $or:[
+                  {"price.price_value":{$lte:disp_priceto_num}},
+                  {"price.select_price":disp_priceto_char},
+                  {"price.select_price":"K"},
+                  {category:"RENT"}
+                ]
+              },
+              {
+                sort:{uploadedAt:-1}
+              });
+            }
+            else{
+              return bannerdb.find({
+                  $or:[
+                  {"price.price_value":{$lte:disp_priceto_num}},
+                  {"price.select_price":disp_priceto_char},
+                  {"price.select_price":"K"},
+                  {"price.select_price":"Lac"},
+                  {category:"RENT"}
+                ]
+              },
+              {
+                sort:{uploadedAt:-1}
+              });
+            }
+            //}
+            //return bannerdb.find({category:"RENT","price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});
           }
           else if(disp_resi_comm != "All")
           {
@@ -276,9 +464,10 @@ Template.home.helpers({
           else{
             alert("No result found");
           }
+            
         }
-        // End of IF of RENT
-        // Start of ELSE of BUY
+        // End of IF of RENT PART
+        // Start of ELSE of BUY PART
         else{
           //Session.set('btn_buy',undefined);
           console.log("else part BUY btn");
@@ -322,15 +511,105 @@ Template.home.helpers({
           }
           else if(disp_roomtype != "Type")
           {
-            return bannerdb.find({rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
+            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category:"BUY"},{sort:{uploadedAt:-1}});
           }
           else if(disp_pricefrom != "Price From")
           {
-            return bannerdb.find({category:"BUY",price:{$gt:disp_pricefrom}},{sort:{uploadedAt:-1}});
+            if (disp_pricefrom_char == "K") {
+              return bannerdb.find(
+              {
+                $or:[
+                {"price.price_value":{$gte:disp_pricefrom_num}},
+                {"price.select_price":disp_pricefrom_char},
+                {"price.select_price":"Lac"},
+                {"price.select_price":"Cr"},
+                {category:"BUY"}
+                ]
+              },
+              {
+                sort:{uploadedAt:-1}
+              }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac"){
+              console.log("buy gt than Lac");
+              return bannerdb.find(
+                {
+                  $and:[
+                    {$or: [{"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char}]},
+                    //{$or: [{"price.select_price":disp_pricefrom_char}]},
+                    //{$or: [{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]},
+                    {category:"BUY"}
+                  ]
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+                );
+            }
+            else{
+              return bannerdb.find(
+                {
+                  "price.price_value":{$gte:disp_pricefrom_num},
+                  "price.select_price":disp_pricefrom_char,
+                  category:"BUY"
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+                );
+            }
+            //return bannerdb.find({category:"BUY","price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},{sort:{uploadedAt:-1}});
           }      
           else if(disp_priceto != "Price To")
           {
-            return bannerdb.find({category:"BUY",price:{$lt:disp_priceto}},{sort:{uploadedAt:-1}});
+            if (disp_priceto_char == "K") 
+            {
+              return bannerdb.find(
+              {
+                $or:[
+                  {"price.price_value":{$lte:disp_priceto_num}},
+                  {"price.select_price":disp_priceto_char},
+                  {category:"BUY"}
+                ]
+              },
+              {
+                sort:{uploadedAt:-1}
+              }
+              );
+            }
+            else if (disp_priceto_char == "Lac") {
+              return bannerdb.find(
+                  {
+                    $or:[
+                      {"price.price_value":{$lte:disp_priceto_num}},
+                      {"price.select_price":disp_priceto_char},
+                      {"price.select_price":"Cr"},
+                      {category : "BUY"}
+                    ]
+                  },
+                  {
+                    sort : {uploadedAt:-1}
+                  }
+                );
+            }
+            else{
+             return bannerdb.find(
+                  {
+                    $or:[
+                      {"price.price_value":{$lte:disp_priceto_num}},
+                      {"price.select_price":disp_priceto_char},
+                      {"price.select_price":"Lac"},
+                      {"price.select_price":"Cr"},
+                      {category : "BUY"}
+                    ]
+                  },
+                  {
+                    sort : {uploadedAt:-1}
+                  }
+                ); 
+            }
+            //return bannerdb.find({category:"BUY","price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});
           }
           else if(disp_resi_comm != "All")
           {

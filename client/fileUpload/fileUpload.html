@@ -22,8 +22,10 @@
         </div>
         <div class="col-sm-3 form-group">
         	<div class="input-group">
-        		<div class="input-group-addon">$</div>
-            	<input class="form-control" id="input_price" name="price" placeholder="price" type="text" required>
+        		<div class="input-group-addon">
+        			<i class="fa fa-rupee"></i>
+        		</div>
+            	<input class="form-control" id="input_price" name="price" placeholder="price" type="text" pattern="\d+" title = "Enter Only numbers" required>
             	<div class="input-group-addon">
 					<select class="forn-control" id="select_price">
 						<option>K</option>
@@ -48,7 +50,7 @@
         <div class="col-sm-3 form-group">
         	<div class="input-group">
         		
-            	<input class="form-control" id="input_sq_ft" name="sq_ft" placeholder="Only Numbers" type="text" required>
+            	<input class="form-control" id="input_sq_ft" name="sq_ft" placeholder="Only Numbers" type="text" pattern="\d+" title = "Enter Only numbers" required>
             	<div class="input-group-addon" id="sq_ft_content">sq/ft</div>
             </div>
     	</div>
@@ -57,19 +59,20 @@
           </div>-->
         <div class="col-sm-3">
             <label class="sr-only" for="property_category"></label>    
+            <select class="form-control" id="option_buy_rent">
+                <option>RENT</option>
+                <option>BUY</option>	                
+            </select>
+       	</div>
+
+        <div class="col-sm-3">
+            <label class="sr-only" for="property_category"></label>    
             <select class="form-control" id="option_resi_commercial">
                 <option>Residential</option>
                 <option>Commercial</option>	                
             </select>
        	</div>
 
-        <div class="col-sm-3">
-            <label class="sr-only" for="property_category"></label>    
-            <select class="form-control" id="option_buy_rent">
-                <option>RENT</option>
-                <option>BUY</option>	                
-            </select>
-       	</div>
         <div class="col-sm-3 form-group">
           	<textarea class="form-control" id="txtarea_description" name="description" placeholder="description"  maxlength="104" rows="2"></textarea>
         </div>

@@ -24,6 +24,8 @@ Template.banner.events({
 		// {
 		// 	alert("ok");
 		// }
+
+		
 		//var id = this._id;
 		//alert(id);
 		//var dis = bannerdb.findOne({_id:id},{_id:1,title:1});
@@ -38,18 +40,21 @@ Template.banner.events({
 		var price = $("#banner_price").text();
 		var rooms = $("#banner_rooms").text();
 		var sqFts = $("#banner_sq_ft").text();
+		var rescomm = $("#banner_res_comm").text();
 		var descriptions = $("#banner_description").text();
 
 		var txtTitle = $('<input id="txtTitle" type="text" value="' + title + '" /> ' );
 		$("#banner_title").replaceWith(txtTitle);
-		var txtLoc = $('<input id="txtLocation" type="text" value="' + loc + '" style="width:100px"/>');
+		var txtLoc = $('<input id="txtLocation" type="text" value="' + loc + '" style="width:80px"/>');
 		$("#banner_location").replaceWith(txtLoc);
-		var txtPrice = $('<input id="txtPrice" type="text" value="' + price + '" style="width:100px"/>');
+		var txtPrice = $('<input id="txtPrice" type="text" pattern="\d+" value="' + price + '" style="width:60px"/>');
 		$("#banner_price").replaceWith(txtPrice);
-		var txtRooms = $('<input id="txtRooms" type="text" value="' + rooms + '" style="width:100px"/>');
+		var txtRooms = $('<input id="txtRooms" type="text" value="' + rooms + '" style="width:50px"/>');
 		$("#banner_rooms").replaceWith(txtRooms);
-		var txtSqFts = $('<input id="txtSq_ft" type="text" value="' + sqFts + '" style="width:100px"/>');
+		var txtSqFts = $('<input id="txtSq_ft" type="text" value="' + sqFts + '" style="width:70px"/>');
 		$("#banner_sq_ft").replaceWith(txtSqFts);
+		var txtrescomm = $('<input id="txtResComm" type=text value="' + rescomm + '" style="width:100px"/> ');
+		$("#banner_res_comm").replaceWith(txtrescomm); 
 		var txtDescription = $('<input id="txtDescription" type="text" value="' + descriptions + '" style="width:250px"/>');
 		$("#banner_description").replaceWith(txtDescription);
 

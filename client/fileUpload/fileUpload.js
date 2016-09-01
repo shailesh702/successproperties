@@ -86,12 +86,12 @@ Template.fileUpload.events({
     var loc = event.target.location.value;
     var price_value = event.target.price.value;
     var select_price = $("#select_price").find(':selected').text();
-    var price = price_value;
-    var price_char = " "+select_price;
+    //var price = price_value;
+    //var price_char = select_price;
     //alert(price_value+price_char);
     var roomtype_value = event.target.rooms.value;
     var select_roomtype = $("#select_room").find(':selected').text(); 
-    var roomtype = roomtype_value+" "+select_roomtype;
+    //var roomtype = roomtype_value+" "+select_roomtype;
     //alert(roomtype);
     var sqft_value = event.target.sq_ft.value;
     //var select_sqft = $("#sq_ft_content").text();
@@ -105,18 +105,24 @@ Template.fileUpload.events({
     // //count++;
     //alert(title,loc,price,roomtype,sqft,category,txtdesc);
     // //Meteor.call("insert",title,loc,price,roomtype,sqft,category,txtdesc);
-    /*bannerdb.insert({
+    bannerdb.insert({
         title: title,
         location : loc,
-        price : price,
-        rooms : roomtype,
+        price : {
+                  price_value:price_value,
+                  select_price:select_price
+                },
+        rooms : {
+                  roomtype_value:roomtype_value,
+                  select_roomtype:select_roomtype
+                },
         sq_ft : sqft,
         category_res_comm : category_res_comm,
         category : category_buy_rent,
         description : txtdesc,
         uploadedAt: new Date().toLocaleString()
       
-    });*/
+    });
     Toast.info("Data insert successfully");
     
   }

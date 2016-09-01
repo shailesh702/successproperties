@@ -84,7 +84,7 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="Room_Type"></label>
                 <select class="form-control" id="room_type_filter">
-                  <option>Type</option>
+                  <option selected="selected">Type</option>
                     {{#each room_type}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
@@ -98,12 +98,13 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="price_from"></label>
                 <select class="form-control" id="price_from_filter">
-                  <option>Price From</option>
+                  <option selected="selected">Price From</option>
                   <!--<option>1 lac</option>-->
                   <!--{{#if pricefrom}} -->
                     {{#each pricefrom}}
                       <option value="{{this}}">{{this}}</option>
                     {{/each}}
+
                   <!--{{else}}
                     {{#each bpriceFrom}}
                       <option value="{{this}}">{{this}}</option>
@@ -115,7 +116,7 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="price_to"></label>
                 <select class="form-control" id="price_to_filter">
-                  <option>Price To</option>
+                  <option selected="selected">Price To</option>
                   <!--{{#if priceto}}-->
                     {{#each priceto}}
                       <option value="{{this}}">{{this}}</option>
@@ -132,7 +133,7 @@
               <div class="col-sm-2">
                 <label class="sr-only" for="property_category"></label>    
                 <select class="form-control" id="resi_commercial">
-                  <option>All</option>
+                  <option selected="selected" >All</option>
                   {{#each rescomm}}
                     <option value="{{this}}">{{this}}</option>
                   {{/each}}
@@ -155,9 +156,14 @@
 <!-- End of Search ui -->
 <div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
     <ul id="imgdesc" style="list-style-type: none;margin:0px 20px;padding:0px 0px 0px 20px;">
+    {{#if bannercontent}}
       {{#each bannercontent}}        
         {{> banner}}
       {{/each}}
+    {{else}}
+          <p>no data found</p>
+    {{/if}}
+
     </ul>
 </div>
 {{> ads}}
