@@ -18,7 +18,7 @@
         <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-              <img id="img1" src= "/images/navi5.jpg" alt="New York">
+              <img id="img1" src= "/images/bl1.jpg" alt="New York">
               <div class="carousel-caption">
                   <h5 style="text-align: right;color: color;font-weight: bolder;text-shadow: 5px 5px 5px gray;">1</h5>
                   <p></p>
@@ -62,24 +62,26 @@
       <div style="border:1px solid black;height:80px;width:25px;position:absolute;right:0px;top:50px;word-wrap:break-word;padding-left:5px;background-color:#104E8B;color:white;font-weight:bolder;box-shadow:-3px -3px 5px gray;letter-spacing:10px;">RENT</div>
       
       {{else}}-->
-        <div style="border:1px solid black;height:80px;width:25px;position:absolute;right:0px;top:50px;word-wrap:break-word;padding-left:5px;background-color:#104E8B;color:white;font-weight:bolder;box-shadow:-3px -3px 5px gray;letter-spacing:10px;z-index:1">{{category}}</div>
+
+        <div style="height:80px;width:25px;position:absolute;right:0px;top:50px;word-wrap:break-word;padding-left:5px;background-color:#3A539B;color:white;font-weight:bolder;box-shadow:-3px -3px 5px gray;letter-spacing:10px;z-index:1">{{category}}</div>
       <!--{{/if}}-->
       <ul id="container_desc_root_ul" style="list-style-type: none;padding: 0;margin: 5px;">
         <li style="margin-top: 5px;">
-          <span id="banner_title" style="font-weight: bold;color:#104E8B;font-size: 20px;">{{title}}</span>
+          <span id="banner_title" style="font-weight: bold;color:#3A539B;font-size: 20px;">{{title}}</span>
         </li>
         <li style="margin-top: 8px;border-bottom:1px solid blue;padding-bottom:25px;position:relative;">
           <!--<span style="font-weight: bold;color:gray;font-size: 16px;"> Location-->
-          <span class="glyphicon glyphicon-map-marker" style="position:absolute;color:black;left:0px;top:0px;">
-            <span style="margin-left:0px;">:</span>
-            <span id="banner_location" style="font-size: 16px"> {{location}}</span>
-          </span>
+          <span class="glyphicon glyphicon-map-marker" style="position:absolute;color:black;left:0px;top:0px;"> </span>
+            <span style="position:absolute;color:black;left:20px;top:-2px;">:</span>
+            <span id="banner_location" style="position:absolute;color:black;left:30px;top:-2px;font-size: 16px;font-family: helvetica rounded;"> {{location}}</span>
+         
             <!-- <span style="margin-left:23px;">:</span> -->
             
-            <i class="fa fa-rupee" style="color:black;left:150px;top:0px;position:absolute;">
-              <span style="margin-left:5px;">:</span>
-              <span id="banner_price" style="margin-left:5px;font-size: 16px"> {{price.price_value}} {{price.select_price}}</span>
-            </i>
+            <!-- <i class="fa fa-rupee" style="color:black;left:145px;top:0px;position:absolute;"></i> -->
+            <img src="/images/rupee-symbol.png" style="color:black;left:145px;top:0px;position:absolute;height:15px;">
+            <span style="position:absolute;color:black;left:162px;top:-3px;">:</span>
+            <span id="banner_price" style="position:absolute;color:black;left:175px;top:-3px;font-size: 16px;font-family: helvetica rounded;"> {{price.price_value}} {{price.select_price}}</span>
+            
             
         </li>
         <!--<li style="margin-top: 5px;">
@@ -89,7 +91,7 @@
           <span id="banner_price" style=""> {{price.select_price}}</span>
         </li>-->
         <li style="margin-top: 5px;">
-          <span style="color:black;font-size: 16px;">Rooms <span style="margin-left:36px;">:</span></span>
+          <span style="color:black;font-size: 16px;font-family: helvetica rounded;">Rooms <span style="margin-left:36px;">:</span></span>
           <span id="banner_rooms" style=""> {{rooms.roomtype_value}}</span>
           <span id="banner_rooms_type" style=""> {{rooms.select_roomtype}}</span>
         </li>
@@ -111,7 +113,7 @@
             <a href="#" class="glyphicon glyphicon-pencil"></a>
         </div>
         {{/if}}
-        <a href="/contact"><div style="margin-top: 5px;position:absolute;bottom:1px;right:1px;width:100px;height: 30px;border-radius:0px 0px 20px 0px;background-color:#104E8B;text-indent:5px;border:1px solid black;box-shadow:-2px -2px 2px gray;">
+        <a href="/contact"><div style="margin-top: 5px;position:absolute;bottom:1px;right:1px;width:100px;height: 30px;border-radius:0px 0px 20px 0px;background-color:#3A539B;text-indent:5px;box-shadow:-2px -2px 2px gray;">
           <span style="position: absolute;top:3px;color:white;">Contact Us</span>
         </div>
         </a>

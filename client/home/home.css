@@ -40,3 +40,11 @@ body {
 #myCarousel_home>.carousel-fade #myCarousel_home>.carousel-control {
   z-index: 2;
 }
+#boxshadow_1{
+  position: relative;
+  padding:10px;
+  /*background-color: #87D37C;*/
+  -moz-box-shadow : 2px 2px 4px gray; 
+  -webkit-box-shadow : 2px 2px 4px gray; 
+  box-shadow : 2px 2px 4px gray; 
+}

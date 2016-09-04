@@ -8,15 +8,18 @@
     <ol class="carousel-indicators">
       <li data-target="#myCarousel_home" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel_home" data-slide-to="1"></li>
+      <li data-target="#myCarousel_home" data-slide-to="2"></li>
+      <li data-target="#myCarousel_home" data-slide-to="3"></li>
       
     </ol>
 
     <!-- Wrapper for slides -->
+    <div id="boxshadow_1"> 
     <div class="carousel-inner" role="listbox">
 
       <div class="item active">
         <center id="center1">
-          <img id="img1_home" src="/images/navi5.jpg" alt="Chania">
+          <img id="img1_home" src="/images/home02.jpg" alt="Chania">
           <div class="carousel-caption">
           </div>
         </center>
@@ -28,10 +31,19 @@
           
         </div></center>
       </div>
-    
+      <div class="item">
+       <center> <img id="img2_home" src="/images/home05.jpg" alt="Chania">
+        <div class="carousel-caption">
+        </div></center>
+      </div>
+      <div class="item">
+       <center> <img id="img2_home" src="/images/home03.jpg" alt="Chania">
+        <div class="carousel-caption">          
+        </div></center>
+      </div>
   
     </div>
-
+    </div>
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel_home" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -48,10 +60,10 @@
 <div class="container-fluid" style="margin:20px 100px 0px 100px;">
   <form role="form">
     <fieldset>
-      <a href="#" class="btn btn-primary" id="btn_rent" role="button">RENT</a>
-      <a href="#" class="btn btn-primary" id="btn_buy" role="button" style="margin-left: -2px;">BUY</a>
+      <a href="#" class="btn btn-primary" id="btn_rent" role="button" style="background-color:#3A539B;">RENT</a>
+      <a href="#" class="btn btn-primary" id="btn_buy" role="button" style="margin-left: -2px;background-color:#3A539B;">BUY</a>
                    
-      <div class="panel panel-primary">      
+      <div class="panel panel-primary" style="padding:10px;background-color: #eff1f9">      
         <div class="panel-body">
           <div class="row" style="">
             <div class="form-group">
@@ -144,7 +156,7 @@
 
               <div class="col-sm-2"> <!--col-md-offset-2">-->
                 <label class="sr-only" for="search"></label>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary" style="background-color:#3A539B;" >Search</button>
               </div>
             </div>
           </div>
@@ -157,7 +169,8 @@
 <div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
     <ul id="imgdesc" style="list-style-type: none;margin:0px 20px;padding:0px 0px 0px 20px;">
     {{#if bannercontent}}
-      {{#each bannercontent}}        
+    <!-- <p>Results Found are:</p> -->
+      {{#each bannercontent}}         
         {{> banner}}
       {{/each}}
     {{else}}

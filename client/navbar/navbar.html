@@ -1,7 +1,7 @@
 <template name="mainNav">
 
 
-<nav class="navbar-fixed-top" style="background-color:#e5e5e5;padding-bottom: 20px;">
+<nav class="navbar-fixed-top" style="background-color:#3A539B;padding-bottom: 20px;">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -12,42 +12,42 @@
       </button>
 
       <!--<a class="navbar-brand" href="#"><span><span style="margin-left:25px;font-weight: bold;font-size: 25px;">SUCCESS</span> <br>Property Consultants</span></a>-->
-      <a class="navbar-brand" href="/"><div style="margin:-14px 0px 0px -12px;box-shadow:2px 2px 5px gray;"><img src="/images/logo_success_property.jpg" style="width:150px;height:70px;margin:0px 0px 0px 0px;"></div></a>
+      <a class="navbar-brand" href="/"><div style="margin:-14px 0px 0px -12px;box-shadow:2px 2px 5px white;"><img src="/images/logo_success_property.jpg" style="width:150px;height:70px;margin:0px 0px 0px 0px;"></div></a>
     </div>
     <ul class="nav navbar-nav navbar-right" style="padding-top: 5px;">
-                <li class="active" style="display: inline;padding: 15px;">
+                <li class="active" style="display: inline;padding: 10px;margin-top:5px;">
                   <li class="home_ref" style="display: inline;">
-                    <a href="/" id="home_ref" style="padding: 15px;text-decoration: none;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500">Home</a>
+                    <a href="/" id="home_ref" style="padding: 15px;text-decoration: none;color:white;font-family: bank gothik MD bt;font-size:16px;font-weight:500">Home</a>
                   </li>
                 	<li style="display: inline;">
-                    <a href="/about_us" id="about_ref" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500">About Us</a>
+                    <a href="/about_us" id="about_ref" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500">About Us</a>
                   </li>
                   <li style="display: inline;" class="dropdown">
-                    <a href="/services" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">Services <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <a href="/services" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500;background-color:#3A539B;">Services <span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
                       <li class="drpdown_rent">
-                          <a href="/rent" id="rent_ref" style="color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">Rent</a>
+                          <a href="/rent" id="rent_ref" style="color:white;font-family: open sans;font-size:16px;font-weight:500;background-color:#3A539B;" class="btn btn-link">Rent</a>
                       </li>
                       <li class="drpdown_buy">
-                          <a href="/buy" id="buy_rent" style="color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">Buy</a>
+                          <a href="/buy" id="buy_rent" style="color:white;font-family: open sans;font-size:16px;font-weight:500;background-color:#3A539B;" class="btn btn-link">Buy</a>
                       </li>                            
                     </ul>
                     </li>
                     <li style="display: inline;">
-                      <a href="/new_construction" id="new_construction_ref" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">New Contruction</a>
+                      <a href="/new_construction" id="new_construction_ref" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500;">New Construction</a>
                     </li>
                     <li style="display: inline;">
-                      <a href="/builder_gallery" id="contact_us_ref" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">Builder Gallery</a>
+                      <a href="/builder_gallery" id="contact_us_ref" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500;">Builder Gallery</a>
                     </li>
                     <li style="display: inline;">
-                      <a href="/contact" id="contact_us_ref" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">Contact us</a>
+                      <a href="/contact" id="contact_us_ref" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500;">Contact us</a>
                     </li>
                     {{#if currentUser}}
                     <li style="display: inline;">
-                      <a href="/fileUpload" style="text-decoration: none;padding: 15px;color:#104E8B;font-family: open sans;font-size:16px;font-weight:500;">File Upload</a>
+                      <a href="/fileUpload" style="text-decoration: none;padding: 15px;color:white;font-family: open sans;font-size:16px;font-weight:500;">File Upload</a>
                     </li>
                     {{/if}}
-                    <li style="display: inline;padding: 15px;margin-right: 145px;font-family: open sans;font-size:16px;font-weight:500;">
+                    <li style="display: inline;padding: 15px;margin-right: 145px;font-family: open sans;font-size:16px;font-weight:500;color:black">
                       {{> loginButtons }}
                     </li>
                   <!--<button type="button" class="btn btn-default navbar-btn">Login</button>-->

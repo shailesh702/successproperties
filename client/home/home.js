@@ -128,11 +128,11 @@ Template.home.events({
     // }
     // else{alert("Else");}
     //alert(test_resi_comm);
-    $("#area_wise_filter").val("Area");
-    $("#room_type_filter").val("Type");
-    $("#price_from_filter").val("Price From");
-    $("#price_to_filter").val("Price To");
-    $("#resi_commercial").val("All");
+    // $("#area_wise_filter").val("Area");
+    // $("#room_type_filter").val("Type");
+    // $("#price_from_filter").val("Price From");
+    // $("#price_to_filter").val("Price To");
+    // $("#resi_commercial").val("All");
     
   },
   'click #btn_rent' : function(e){
@@ -211,7 +211,7 @@ Template.home.helpers({
       {
         console.log("disp_btn_buy:"+disp_btn_buy);
         console.log("disp_btn_rent:"+disp_btn_rent);
-        //return bannerdb.find({},{sort:{uploadedAt:-1}});
+        
         if(!disp_testarea && !disp_roomtype){
             return bannerdb.find({},{sort:{uploadedAt:-1}});  
         }
@@ -219,33 +219,90 @@ Template.home.helpers({
           return bannerdb.find({},{sort:{uploadedAt:-1}});
         }
         else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
+          if (disp_roomtype_char == "BHK") {
+          return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
+          }
+          else{
+            return bannerdb.find({
+              $and : [
+                      {$or : [{"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                              {"rooms.select_roomtype":"BHK"}
+                              ]},                      
+                      {category_res_comm:disp_resi_comm},
+                      {location:disp_testarea}
+              ]},
+              {sort:{uploadedAt:-1}});
+          }
         }
         else if(disp_testarea != "Area" && disp_roomtype != "Type"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype},{sort:{uploadedAt:-1}});
+          if (disp_roomtype_char == "BHK") {
+            return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,"rooms.roomtype_value":{$gte:disp_roomtype_number}},{sort:{uploadedAt:-1}});
+          }
+          else
+            return bannerdb.find({
+              $and:[
+                {$or:[
+                      {"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                      {"rooms.select_roomtype":"BHK"}
+                    ]},
+                    {location:disp_testarea}
+              ]},
+              {sort:{uploadedAt:-1}}
+            );
         }
         else if(disp_testarea != "Area" && disp_resi_comm != "All"){
             return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
         }
-        else if (disp_pricefrom != "Price From" && disp_priceto != "Price To") {
-          return bannerdb.find(
+        else if (disp_pricefrom != "Price From" && disp_priceto != "Price To")
+        {
+          if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+            return bannerdb.find(
+                {
+                  // $and : [
+                  //   {$or: [{"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char}]},
+                  //   {$or: [{"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}]}
+                  // ]
+                  $and : [
+                    {"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char},
+                    {"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}
+                    ]
+                  },
+                {sort:{uploadedAt:-1}}
+              );
+            }            
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr")
             {
-              $and : [
-                {"price.price_value":{$gte:disp_pricefrom_num}},
-                {"price.price_value":{$lte:disp_priceto_num}}
-              ]
-            },
-            {sort:{uploadedAt:-1}}
-          );
+              console.log("lac and crore");
+              var abc = bannerdb.find(
+              {
+                $and : [
+                     {$or:[{"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},{"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char}]}
+                  // {"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char},
+                  // {"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}
+                  ]
+                },
+              {sort:{uploadedAt:-1}}
+              ); 
+              if(abc)
+              {
+                console.log("abc");
+                return abc;
+              }
+              else{return false;}
+            }
+            else{
+              return false;
+            }
         }
         else if(disp_testarea != "Area")
         {
             var res = bannerdb.find({location:disp_testarea},{sort:{uploadedAt:-1}});
-            if(!res){
-              alert("No data found");
+            if(res){
+              //alert("No data found");
+              return res;
             }
             else{
-              return res;
+              return false;
             }
         }
         else if(disp_roomtype != "Type")
@@ -255,12 +312,14 @@ Template.home.helpers({
         else if(disp_pricefrom != "Price From")
         {
             if (disp_pricefrom_char == "Lac") {
+              var counter=0;
               return bannerdb.find(
-                {
-                  $and : [
-                    {$or : [{"price.price_value":{$gte:disp_pricefrom_num}}]},
-                    {$or:[{"price.select_price":disp_pricefrom_char},{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]}
-                  ],
+                {                  
+                  $or : [
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.select_price":"Cr"}
+                      ]
+                  //{$or:[{"price.price_value":{$gte:1},"price.select_price":"Cr"}]}
                 },
                 {
                   sort:{uploadedAt:-1}
@@ -289,15 +348,19 @@ Template.home.helpers({
             //return bannerdb.find({"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});    
             console.log("Lac or less than");            
             return bannerdb.find(
-                { 
+                {
+                  $or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},
+                        {"price.select_price":"K"}
+                      ] 
                   //$and:[
                   //{$or:[{"price.price_value":{$exists:true}},{"price.select_price":"Cr"}]},
-                  $and:[
+                  /*$and:[
                       {$or : [{"price.price_value":{$lte:disp_priceto_num}}]},
-                      {$or:[{"price.select_price":disp_priceto_char},{"price.price_value":{$lte:1}},{"price.select_price":"K"}]}
+                      {$or:[{"price.select_price":disp_priceto_char},{"price.price_value":{$lte:1}},{"price.select_price":"K"}]}*/
                       //{$or: [{"price.price_value":{$lte:1}},{"price.select_price":"K"}]}
                       //{"price.select_price":"Cr"}
-                    ]
+                  
                   //$and:[{disp_priceto_char:"K"}]
                   //]
                   //"price.select_price":"K",
@@ -308,7 +371,7 @@ Template.home.helpers({
                 );
           }
           else{
-            console.log("price Cr or less than"); 
+            //console.log("price Cr or less than"); 
             return bannerdb.find(
               { $and:[
                   {$or : [{"price.price_value":{$lte:disp_priceto_num}}]},
@@ -318,19 +381,8 @@ Template.home.helpers({
               },
               { 
                 sort:{uploadedAt:-1}
-              });
-                
-                //   "price.price_value":{$lte:disp_priceto_num},
-                //   "price.select_price":disp_priceto_char,
-                //   $and:[{$or:[{disp_priceto_char:"K"},{disp_priceto_char:"Lac"}]}]
-                  
-                // },
-                // {
-                //   sort:{uploadedAt:-1}
-                // }
-                // );
+              });               
           }
-
         }
         else if(disp_resi_comm != "All")
         {
@@ -342,8 +394,8 @@ Template.home.helpers({
       }
       else{   // code for RENT
         if(disp_btn_rent == 'rent'){
-          console.log("else : "+disp_btn_rent);
-          console.log("disp_testarea:"+disp_testarea);
+          //console.log("else : "+disp_btn_rent);
+          //console.log("disp_testarea:"+disp_testarea);
           if(!disp_testarea && !disp_roomtype){
             return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});  
           }
@@ -351,13 +403,80 @@ Template.home.helpers({
             return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});
           }
           else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+            //return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char ,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+            if (disp_roomtype_char == "BHK") {
+              return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find({
+                  $and : [
+                      {$or : [{"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                              {"rooms.select_roomtype":"BHK"}
+                              ]},                      
+                      {category_res_comm:disp_resi_comm},
+                      {location:disp_testarea},
+                      {category:"RENT"}
+                  ]},
+              {sort:{uploadedAt:-1}});
+            }
           }
           else if(disp_testarea != "Area" && disp_roomtype != "Type"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"RENT"},{sort:{uploadedAt:-1}});
+            // return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,category:"RENT"},{sort:{uploadedAt:-1}});
+            if (disp_roomtype_char == "BHK") {
+              return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,"rooms.roomtype_value":{$gte:disp_roomtype_number},category:"RENT"},{sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find({              
+                $and:[
+                  {$or:[
+                      {"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                      {"rooms.select_roomtype":"BHK"}
+                    ]},
+                    {location:disp_testarea},
+                    {category:"RENT"}
+                  ]},
+                {sort:{uploadedAt:-1}}
+              );
+            }
           }
           else if(disp_testarea != "Area" && disp_resi_comm != "All"){
             return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
+          }
+          else if (disp_pricefrom != "Price From" && disp_priceto != "Price To") {
+            if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac"){
+            return bannerdb.find(
+                {
+                  // $and : [
+                  //   {$or: [{"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char}]},
+                  //   {$or: [{"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}]}
+                  // ]
+                  $and : [
+                    {"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char},
+                    {"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}
+                    ]
+                  },
+                {sort:{uploadedAt:-1}}
+              );
+            }
+            else if(disp_pricefrom_char == "K" && disp_priceto_char == "Lac")
+            {
+              //console.log("RENT option : lac and crore");
+              return bannerdb.find({
+                $and : [
+                     {$or:[
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char}
+                        
+                        ]},
+                      {category:"RENT"}
+                  ]},
+              {sort:{uploadedAt:-1}}
+              ); 
+              
+            }
+            else{
+              return false;
+            }
           }
           else if(disp_testarea != "Area")
           {
@@ -378,12 +497,20 @@ Template.home.helpers({
             if(disp_pricefrom_char == "K"){
               return bannerdb.find({
                   $and:[
+                      {$or : [
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.select_price":"Lac"},
+                        {"price.select_price":"Cr"}
+                      ]},
+                      {category:"RENT"} 
+                    ]
+                  /*$and:[
                         {$or :[{"price.price_value":{$gte:disp_pricefrom_num}}]},
                         {$or: [{"price.select_price":disp_pricefrom_char}]},
                         {$and: [{"price.price_value":{$gte:1}},{"price.select_price":"Lac"}]},
                         {$and: [{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]},
                         {category:"RENT"}
-                      ]
+                      ]*/
                   },
                   {sort:{uploadedAt:-1}}
                   );
@@ -391,12 +518,19 @@ Template.home.helpers({
             else if(disp_priceto_char == "Lac"){
               return bannerdb.find(
               {
-                $or:[
+                $and:[
+                      {$or : [
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.select_price":"Cr"}
+                      ]},
+                      {category:"RENT"} 
+                    ]
+                /*$or:[
                   {category:"RENT"},
                   {"price.price_value":{$gte:disp_pricefrom_num}},
                   {"price.select_price":disp_pricefrom_char},
                   {"price.select_price":"Cr"}
-                  ]
+                  ]*/
               },
               {sort:{uploadedAt:-1}}
               );
@@ -416,11 +550,18 @@ Template.home.helpers({
           {
             if (disp_priceto_char == "K") {
               return bannerdb.find({
-                $or:[
+                $and:[
+                      {$or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char}
+                        
+                      ]},
+                      {category:"RENT"} 
+                    ]
+                /*$or:[
                 {"price.price_value":{$lte:disp_priceto_num}},
                 {"price.select_price":disp_priceto_char},
                 {category:"RENT"}
-                ]
+                ]*/
               },
               {
                 sort:{uploadedAt:-1}
@@ -429,12 +570,19 @@ Template.home.helpers({
             else if(disp_priceto_char == "Lac")
             {
               return bannerdb.find({
-                $or:[
+                $and:[
+                      {$or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},
+                        {"price.select_price":"K"}
+                      ]},
+                      {category:"RENT"} 
+                    ]
+                /*$or:[
                   {"price.price_value":{$lte:disp_priceto_num}},
                   {"price.select_price":disp_priceto_char},
                   {"price.select_price":"K"},
                   {category:"RENT"}
-                ]
+                ]*/
               },
               {
                 sort:{uploadedAt:-1}
@@ -442,13 +590,21 @@ Template.home.helpers({
             }
             else{
               return bannerdb.find({
-                  $or:[
+                  $and:[
+                      {$or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},
+                        {"price.select_price":"Lac"},
+                        {"price.select_price":"K"}
+                      ]},
+                      {category:"BUY"} 
+                    ]
+                  /*$or:[
                   {"price.price_value":{$lte:disp_priceto_num}},
                   {"price.select_price":disp_priceto_char},
                   {"price.select_price":"K"},
                   {"price.select_price":"Lac"},
                   {category:"RENT"}
-                ]
+                ]*/
               },
               {
                 sort:{uploadedAt:-1}
@@ -478,10 +634,41 @@ Template.home.helpers({
             return bannerdb.find({category:"BUY"},{sort:{uploadedAt:-1}});
           }
           else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
+            //return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
+            if (disp_roomtype_char == "BHK") {
+              return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find({
+              $and : [
+                      {$or : [{"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                              {"rooms.select_roomtype":"BHK"}
+                              ]},                      
+                      {category_res_comm:disp_resi_comm},
+                      {location:disp_testarea},
+                      {category:"BUY"}
+              ]},
+              {sort:{uploadedAt:-1}});
+            }
           }
           else if(disp_testarea != "Area" && disp_roomtype != "Type"){
-            return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
+            //return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
+            if (disp_roomtype_char == "BHK") {
+              return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,"rooms.roomtype_value":{$gte:disp_roomtype_number},category:"BUY"},{sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find({              
+                $and:[
+                  {$or:[
+                      {"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},
+                      {"rooms.select_roomtype":"BHK"}
+                    ]},
+                    {location:disp_testarea},
+                    {category:"BUY"}
+                  ]},
+                {sort:{uploadedAt:-1}}
+              );
+            }
           }
           else if(disp_testarea != "Area" && disp_resi_comm != "All"){
             var result = bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
@@ -490,6 +677,43 @@ Template.home.helpers({
             if(result == null)
             {console.log("No data found");}
             return result;
+          }
+          else if (disp_pricefrom != "Price From" && disp_priceto != "Price To") {
+            if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              return bannerdb.find(
+                {                  
+                  $and : [
+                    {"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char},
+                    {"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}
+                    ]
+                  },
+                {sort:{uploadedAt:-1}}
+              );
+            }            
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr")
+            {
+              //console.log("BUY option : lac and crore");
+              var abc = bannerdb.find(
+              {
+                $and : [
+                  {$or:[
+                    {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                    {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char}
+                  ]},
+                  {category:"BUY"}
+                ]},
+              {sort:{uploadedAt:-1}}
+              ); 
+              if(abc)
+              {
+                //console.log("abc");
+                return abc;
+              }
+              else{return false;}
+            }
+            else{
+              return false;
+            }
           }
           else if(disp_testarea != "Area")
           {
@@ -518,13 +742,21 @@ Template.home.helpers({
             if (disp_pricefrom_char == "K") {
               return bannerdb.find(
               {
-                $or:[
+                /*$or:[
                 {"price.price_value":{$gte:disp_pricefrom_num}},
                 {"price.select_price":disp_pricefrom_char},
                 {"price.select_price":"Lac"},
                 {"price.select_price":"Cr"},
                 {category:"BUY"}
-                ]
+                ]*/
+                $and:[
+                      {$or : [
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.select_price":"Lac"},
+                        {"price.select_price":"Cr"}
+                      ]},
+                      {category:"BUY"} 
+                    ]
               },
               {
                 sort:{uploadedAt:-1}
@@ -535,12 +767,20 @@ Template.home.helpers({
               console.log("buy gt than Lac");
               return bannerdb.find(
                 {
-                  $and:[
-                    {$or: [{"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char}]},
+                  /*$and:[
+
+                    //{$or: [{"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char}]},
                     //{$or: [{"price.select_price":disp_pricefrom_char}]},
                     //{$or: [{"price.price_value":{$gte:1}},{"price.select_price":"Cr"}]},
                     {category:"BUY"}
-                  ]
+                  ]*/
+                  $and:[
+                      {$or : [
+                        {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
+                        {"price.select_price":"Cr"}
+                      ]},
+                      {category:"BUY"} 
+                    ]
                 },
                 {
                   sort:{uploadedAt:-1}
@@ -581,12 +821,19 @@ Template.home.helpers({
             else if (disp_priceto_char == "Lac") {
               return bannerdb.find(
                   {
-                    $or:[
+                    $and:[
+                      {$or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},
+                        {"price.select_price":"K"}
+                      ]},
+                      {category:"BUY"} 
+                    ]
+                    /*$or:[
                       {"price.price_value":{$lte:disp_priceto_num}},
                       {"price.select_price":disp_priceto_char},
                       {"price.select_price":"Cr"},
                       {category : "BUY"}
-                    ]
+                    ]*/
                   },
                   {
                     sort : {uploadedAt:-1}
@@ -596,13 +843,21 @@ Template.home.helpers({
             else{
              return bannerdb.find(
                   {
-                    $or:[
+                    $and:[
+                      {$or : [
+                        {"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},
+                        {"price.select_price":"Lac"},
+                        {"price.select_price":"K"}
+                      ]},
+                      {category:"BUY"} 
+                    ]
+                    /*$or:[
                       {"price.price_value":{$lte:disp_priceto_num}},
                       {"price.select_price":disp_priceto_char},
                       {"price.select_price":"Lac"},
                       {"price.select_price":"Cr"},
                       {category : "BUY"}
-                    ]
+                    ]*/
                   },
                   {
                     sort : {uploadedAt:-1}
@@ -761,6 +1016,9 @@ Template.home.helpers({
     'rescomm':function(){
       var residential_commercial = searchuidb.findOne({},{_id:0,residential_commercial:1});
       return residential_commercial.residential_commercial;
+    },
+    'isTrue':function(){
+      return true;
     }
 });
 

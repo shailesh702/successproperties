@@ -1,9 +1,25 @@
 .nav {
     
-    
+    /*background-color: #6C7A89;*/
 }
 .navbar-brand
 {
-/*color:#104E8B;
-border-color: gray;*/
+/*color:#104E8B;*/
+/*color:#87D37C;*/
+/*border-color: #65C6BB;*/
+}
+.navbar-nav{
+	background-color: #3A539B;
+	height: 54px;
+	border:none;
+}
+.navbar-nav a:focus{
+	background-color: #B7C3D0;
+}
+.navbar-nav a:hover{
+	background-color: #b6c1e4;
+	color: black;
+}
+.navbar-nav>#dropdown>#dropdown-menu a:hover{
+	background-color: #B7C3D0;
 }

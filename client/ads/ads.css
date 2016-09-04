@@ -55,4 +55,140 @@ div#ad_details > div#ad_description{
 	left: 105px;
 }
 
+#contact_us_ad{
+	height: 115px;
+	width: 40px;
+	position: fixed;
+	left:0px;
+	top:250px;
+	border:1px solid #3A539B;
+	/*word-wrap: break-word;*/
+	background-color: #3A539B;
+	color: white;
+	z-index: 999;
+	/*transform: rotate(-90deg);*/
 
+}
+#contact_details_letter > 	[id^="span_contact_us_"]
+{
+	position: absolute;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+}
+
+/*#contact_details_letter > #span_contact_us_c,#span_contact_us_o,#span_contact_us_n,#span_contact_us_t,#span_contact_us_a{
+	position: absolute;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+	/*font-weight: bolder;*/
+/*}*/
+#span_contact_us_c{
+	/*position: absolute;*/
+	/*background-color: yellow;*/
+	/*letter-spacing: 2px;*/
+	/*line-height: 1px;*/
+	/*font-size: 16px;
+	font-weight: bold;
+	top: 90px;
+
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bolder;*/
+	top: 90px;
+	left:10px;
+	transform : scale(1.5,1.5) rotate(-90deg);
+}
+#span_contact_us_o{
+	/*position: absolute;
+	font-size: 16px;
+	font-weight: bold;	
+	font-family: "Times New Roman", Times, serif;*/
+	/*transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top: 75px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#span_contact_us_n{
+	/*position: absolute;
+	font-weight: bold;
+	font-size: 16px;
+	font-family: "Times New Roman", Times, serif;*/
+	/*transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top: 60px;
+	left: 13px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#span_contact_us_t{
+	/*position: absolute;
+	font-weight: bold;
+	font-size: 16px;
+	font-family: "Times New Roman", Times, serif;*/
+/*	transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top: 45px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#span_contact_us_a{
+	/*position: absolute;
+	font-weight: bold;
+	font-size: 16px;	
+	font-family: "Times New Roman", Times, serif;*/
+	/*transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top: 30px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#span_contact_us_c1{
+	/*position: absolute;
+	font-weight: bold;
+	font-size: 16px;
+	
+	font-family: "Times New Roman", Times, serif;*/
+	/*transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top:15px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#span_contact_us_t1{
+	/*position: absolute;
+	font-weight: bold;
+	font-size: 16px;
+	font-family: "Times New Roman", Times, serif;*/
+	/*transform : scale(1.8,1);
+	transform: rotate(-90deg);*/
+	top: 0px;
+	transform : scale(1,1.5) rotate(-90deg);
+}
+#link_facebook{
+	width: 38px;
+	height: 35px;
+	position: fixed;
+	right: 0;
+	top: 250px;
+	/*border: 1px solid black;*/
+}
+#link_facebook>img{
+	width: 38px;
+	height: 34px;
+	position: absolute;
+	left: 0;
+}
+#link_twitter{
+	width: 38px;
+	height: 34px;
+	position: fixed;
+	right: 0;
+	top: 282px;
+	/*background-color: yellow;*/
+	/*background-image: url(/images/facebook_logo1.PNG);*/
+	/*background-size: contain;*/
+	/*border: 1px solid black;*/
+}
+#link_twitter>img{
+	width: 34px;
+	height: 32px;
+	position: absolute;
+	right: 2px;
+}
