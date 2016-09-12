@@ -218,6 +218,473 @@ Template.home.helpers({
         else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
           return bannerdb.find({},{sort:{uploadedAt:-1}});
         }
+
+        // code for area & roomtype & price from & price to & category
+        else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To" && disp_resi_comm != "All") {
+          if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+            
+            if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {
+                $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    }
+                    ]
+                // $and:[
+                // {$or : [
+                //       {
+                //         "price.price_value":{$gte:disp_pricefrom_num},
+                //         "price.select_price":disp_pricefrom_char
+                //       },
+                //       {"price.select_price":"Cr"}
+                //   ]},
+                //   {
+                //     location:disp_testarea,
+                //     "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                //     "rooms.select_roomtype":disp_roomtype_char,
+                //     category_res_comm:disp_resi_comm;
+                //    }
+                //   ]},
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              //console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+              
+
+        } // End of if else of area,type,price from,price to and all
+
+        // code for area & roomtype & price from & price to
+        else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To") {
+          if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+            
+            if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {
+                $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,                      
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    }
+                    ]
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              //console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    }
+                    ]                  
+              },
+              {sort:{"rooms.roomtype_value":1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      location : disp_testarea
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    },
+                    {
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }              
+
+        } // End of if else of area,type,price from,price to 
+
+        else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_pricefrom != "Price From") {
+          if (disp_roomtype_char == "BHK" && disp_pricefrom != "Price From") {
+            console.log("BHK :");
+            //return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
+              // if(disp_pricefrom != "Price From")
+              // {
+                console.log("Price from :");
+                if (disp_pricefrom_char == "Lac") {
+                  console.log("Lac :");
+                  return bannerdb.find(
+                    { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char
+                              // location:disp_testarea,
+                              // "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              // "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"}
+                        ]},
+                        {
+                          location:disp_testarea,
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char,                          
+                         }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      location:disp_testarea,
+                      "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                      "rooms.select_roomtype":disp_roomtype_char                      
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+                //}
+            } ////////////////////////////////////////////
+          else{ //if room == 1RK 
+            // return bannerdb.find({
+            //   $and : [
+            //           {$or : [{
+            //                   "rooms.roomtype_value":{$gte:disp_roomtype_number},
+            //                   "rooms.select_roomtype":disp_roomtype_char
+            //                   },
+            //                   {"rooms.select_roomtype":"BHK"}
+            //                   ]},                                            
+            //           {location:disp_testarea}
+            //   ]},
+            //   {sort:{uploadedAt:-1}});
+            
+              console.log("RK and Price From :");              
+              if (disp_pricefrom_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char,                              
+                              "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"},
+                            {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$gte:disp_pricefrom_num},
+                          "price.select_price":"disp_pricefrom_char",                          
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+
+        }/////////////// End of ELSE IF PRICE FROM
+
+        else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_priceto != "Price To") {
+          if (disp_roomtype_char == "BHK" && disp_priceto != "Price To") {
+            console.log("BHK :");
+            console.log("Price To :");
+            if (disp_priceto_char == "Lac") {
+                console.log("Lac :");
+                return bannerdb.find(
+                    { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,
+                            },
+                            {"price.select_price":"K"}
+
+                        ]},
+                        {
+                          location:disp_testarea,
+                          // "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          // "rooms.select_roomtype":disp_roomtype_char,                          
+                        }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $or:[
+                        {"price.price_value":{$lte:disp_priceto_num},
+                        "price.select_price":disp_priceto_char,
+                        location:disp_testarea,
+                        "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                        "rooms.select_roomtype":disp_roomtype_char                      
+                        },
+                        {"price.select_price":"Lac",location:disp_testarea},
+                        {"price.select_price":"K",location:disp_testarea}
+                      ]
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+                //}
+            } ////////////////////////////////////////////
+          else{ //if room == 1RK 
+                        
+              console.log("RK and Price To :");              
+              if (disp_priceto_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,                              
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"K"},
+                            //{"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$lte:disp_to_num},
+                          "price.select_price":disp_priceto_char,                          
+                          "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          //{"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+
+        }/////////////// End of ELSE IF PRICE TO
+
         else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
           if (disp_roomtype_char == "BHK") {
           return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
@@ -250,6 +717,62 @@ Template.home.helpers({
               {sort:{uploadedAt:-1}}
             );
         }
+        else if (disp_testarea != "Area" && disp_pricefrom != "Price From") {
+          if (disp_pricefrom_char == "Lac") {
+            //console.log("Area and price from:")
+            return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char
+                    },
+                    {location:disp_testarea,"price.select_price":"Cr"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+          else{
+            return bannerdb.find(
+                {
+                  location:disp_testarea,
+                  "price.price_value":{$gte:disp_pricefrom_num},
+                  "price.select_price":disp_pricefrom_char
+                },
+                {sort:{uploadedAt:-1}
+              });
+          }
+        }
+        else if (disp_testarea != "Area" && disp_priceto != "Price To") {
+          if (disp_priceto_char == "Lac") {
+            //console.log("Area and price from:")
+            return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char
+                    },
+                    {location:disp_testarea,"price.select_price":"K"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+          else{ // if selected = Crore
+            return bannerdb.find(
+                {$or:[
+                  {
+                    location:disp_testarea,
+                    "price.price_value":{$lte:disp_priceto_num},
+                    "price.select_price":disp_priceto_char
+                  },
+                  {location:disp_testarea,"price.select_price":"Lac"},
+                  {location:disp_testarea,"price.select_price":"K"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+        }
         else if(disp_testarea != "Area" && disp_resi_comm != "All"){
             return bannerdb.find({location:disp_testarea,category_res_comm:disp_resi_comm},{sort:{uploadedAt:-1}});
         }
@@ -277,8 +800,6 @@ Template.home.helpers({
               {
                 $and : [
                      {$or:[{"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},{"price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char}]}
-                  // {"price.price_value":{$gte:disp_pricefrom_num}},{"price.select_price":disp_pricefrom_char},
-                  // {"price.price_value":{$lte:disp_priceto_num}},{"price.select_price":disp_priceto_char}
                   ]
                 },
               {sort:{uploadedAt:-1}}
@@ -305,9 +826,26 @@ Template.home.helpers({
               return false;
             }
         }
-        else if(disp_roomtype != "Type")
-        {
-            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char},{sort:{uploadedAt:-1}});
+        else if(disp_roomtype != "Type"){            
+            if (disp_roomtype_char == "RK") {
+            return bannerdb.find(
+              { $or:[
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                },
+                {"rooms.select_roomtype":"BHK"}                
+              ]},
+              {sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find(
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                },                
+              {sort:{uploadedAt:-1}});
+            }
         }
         else if(disp_pricefrom != "Price From")
         {
@@ -318,8 +856,7 @@ Template.home.helpers({
                   $or : [
                         {"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},
                         {"price.select_price":"Cr"}
-                      ]
-                  //{$or:[{"price.price_value":{$gte:1},"price.select_price":"Cr"}]}
+                      ]                  
                 },
                 {
                   sort:{uploadedAt:-1}
@@ -336,8 +873,7 @@ Template.home.helpers({
                   sort:{uploadedAt:-1}
                 }
                 );
-            }
-            //return bannerdb.find({"price.price_value":{$gte:disp_pricefrom_num},"price.select_price":disp_pricefrom_char},{sort:{uploadedAt:-1}});
+            }            
         }      
         else if(disp_priceto != "Price To")
         {
@@ -392,6 +928,7 @@ Template.home.helpers({
           alert("No result found");
         }
       }
+      /////////////////////////////////////////////////////////////////////////////////
       else{   // code for RENT
         if(disp_btn_rent == 'rent'){
           //console.log("else : "+disp_btn_rent);
@@ -402,6 +939,490 @@ Template.home.helpers({
           else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
             return bannerdb.find({category:"RENT"},{sort:{uploadedAt:-1}});
           }
+
+          // code for area & roomtype & price from & price to & category
+          else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To" && disp_resi_comm != "All") {
+            if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("K and Lac and crore :");
+                return bannerdb.find(
+                {
+                  $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if (disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr") {
+              return bannerdb.find({
+                $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category :"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }            
+            else if(disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    {
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }              
+
+        } // End of else if of area,type,price from,price to and all
+
+        // Start of if area & room & pricefrom & priceto
+         else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To" ) {
+            if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("K and Lac and crore :");
+                return bannerdb.find(
+                {
+                  $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if (disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr") {
+              return bannerdb.find({
+                $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category :"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      location : disp_testarea,
+                      category:"RENT"
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }            
+            else if(disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category:"RENT"
+                    },
+                    // {
+                    //   "price.price_value":{$lte:disp_priceto_num},
+                    //   "price.select_price":disp_priceto_char,
+                    //   //"rooms.select_roomtype":disp_roomtype_char,
+                    //   location : disp_testarea,
+                    //   category:"RENT"
+                    // },
+                    {
+                      //"price.price_value":{$lte:disp_priceto_num},
+                      //"price.select_price":"BHK",
+                      "rooms.select_roomtype":"BHK",
+                      location : disp_testarea,
+                      category:"RENT"
+                    }
+                    ]                  
+              },
+              {sort:{"rooms.roomtype_value":1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }              
+
+        }
+
+        // Start of if area,room,priceFrom
+        else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_pricefrom != "Price From") {
+            if (disp_roomtype_char == "BHK" && disp_pricefrom != "Price From") {
+              console.log("RENT BHK :");
+              console.log("RENT Price from :");
+              if (disp_pricefrom_char == "Lac") {
+                console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char
+                              // location:disp_testarea,
+                              // "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              // "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"}
+                        ]},
+                        {
+                          location:disp_testarea,
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char,
+                          category:"RENT"
+                         }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      location:disp_testarea,
+                      "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category:"RENT"
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+            } ////////////////////////////////////////////
+          else{ //if room == 1RK 
+            
+              console.log("RENT RK and Price From :");              
+              if (disp_pricefrom_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char,                              
+                              "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"},
+                            {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"RENT"}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else if (disp_pricefrom_char == "K") 
+                {
+                  console.log("K :");
+                  return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char,                              
+                              "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Lac"},
+                            {"price.select_price":"Cr"},
+                            {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"RENT"}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$gte:disp_pricefrom_num},
+                          "price.select_price":"disp_pricefrom_char",                          
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"RENT"}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+
+          }/////////////// End of ELSE IF PRICE FROM
+
+          //////////////// Start of ELSE IF PRICE TO
+          else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_priceto != "Price To") {
+          if (disp_roomtype_char == "BHK" && disp_priceto != "Price To") {
+            //console.log("BHK :");
+            //console.log("Price To :");
+            if (disp_priceto_char == "Lac") {
+                //console.log("Lac :");
+                return bannerdb.find(
+                    { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,
+                            },
+                            {"price.select_price":"K"}
+                        ]},
+                        {
+                          location:disp_testarea,
+                          "category":"RENT"
+                          // "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          // "rooms.select_roomtype":disp_roomtype_char,                          
+                        }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $or:[
+                        {"price.price_value":{$lte:disp_priceto_num},
+                        "price.select_price":disp_priceto_char,
+                        location:disp_testarea,
+                        "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                        "rooms.select_roomtype":disp_roomtype_char,
+                        category : "RENT"
+                        },
+                        {"price.select_price":"Lac",location:disp_testarea,category:"RENT"},
+                        {"price.select_price":"K",location:disp_testarea,category:"RENT"}
+                      ]
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+                //}
+            } ////////////////////////////////////////////
+          else{ //if room == 1RK 
+                        
+              console.log("RK and Price To :");              
+              if (disp_priceto_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,                              
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"K"}                            
+                        ]},
+                        {
+                          location:disp_testarea,
+                          category:"RENT"
+                        }
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$lte:disp_to_num},
+                          "price.select_price":disp_priceto_char,                          
+                          "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          //{"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"RENT"}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+          } /////////// End of ELSE IF PRICE TO
+
           else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
             //return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char ,category_res_comm:disp_resi_comm,category:"RENT"},{sort:{uploadedAt:-1}});
             if (disp_roomtype_char == "BHK") {
@@ -437,6 +1458,82 @@ Template.home.helpers({
                   ]},
                 {sort:{uploadedAt:-1}}
               );
+            }
+          }
+          else if (disp_testarea != "Area" && disp_pricefrom != "Price From") {
+            if (disp_pricefrom_char == "Lac") {
+            //console.log("Area and price from:")
+              return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      category:"RENT"
+                    },
+                    {location:disp_testarea,"price.select_price":"Cr",category:"RENT"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+            }
+            else if (disp_pricefrom_char == "K") {
+            //console.log("Area and price from:")
+              return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      category:"RENT"
+                    },
+                    {location:disp_testarea,"price.select_price":"Cr",category:"RENT"},
+                    {location:disp_testarea,"price.select_price":"Lac",category:"RENT"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+            }
+            else{
+              return bannerdb.find(
+                {
+                  location:disp_testarea,
+                  "price.price_value":{$gte:disp_pricefrom_num},
+                  "price.select_price":disp_pricefrom_char,
+                  category:"RENT"
+                },
+                {sort:{uploadedAt:-1}
+              });
+            }
+          }
+        else if (disp_testarea != "Area" && disp_priceto != "Price To") {
+          if (disp_priceto_char == "Lac") {
+            //console.log("Area and price from:")
+            return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      category:"RENT"
+                    },
+                    {location:disp_testarea,"price.select_price":"K",category:"RENT"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+          else{ // if selected = Crore
+            return bannerdb.find(
+                {$or:[
+                  {
+                    location:disp_testarea,
+                    "price.price_value":{$lte:disp_priceto_num},
+                    "price.select_price":disp_priceto_char,
+                    category:"RENT"
+                  },
+                  {location:disp_testarea,"price.select_price":"Lac",category:"RENT"},
+                  {location:disp_testarea,"price.select_price":"K",category:"RENT"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
             }
           }
           else if(disp_testarea != "Area" && disp_resi_comm != "All"){
@@ -488,9 +1585,28 @@ Template.home.helpers({
               return res;
             }
           }
-          else if(disp_roomtype != "Type")
-          {
-            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category:"RENT"},{sort:{uploadedAt:-1}});
+          else if(disp_roomtype != "Type"){            
+            if (disp_roomtype_char == "RK") {
+            return bannerdb.find(
+              { $or:[
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                  category:"BUY"
+                },
+                {"rooms.select_roomtype":"BHK",category:"RENT"},                
+              ]},
+              {sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find(
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                  category:"RENT"
+                },                
+              {sort:{uploadedAt:-1}});
+            }
           }
           else if(disp_pricefrom != "Price From")
           {
@@ -576,13 +1692,7 @@ Template.home.helpers({
                         {"price.select_price":"K"}
                       ]},
                       {category:"RENT"} 
-                    ]
-                /*$or:[
-                  {"price.price_value":{$lte:disp_priceto_num}},
-                  {"price.select_price":disp_priceto_char},
-                  {"price.select_price":"K"},
-                  {category:"RENT"}
-                ]*/
+                    ]                
               },
               {
                 sort:{uploadedAt:-1}
@@ -597,21 +1707,12 @@ Template.home.helpers({
                         {"price.select_price":"K"}
                       ]},
                       {category:"BUY"} 
-                    ]
-                  /*$or:[
-                  {"price.price_value":{$lte:disp_priceto_num}},
-                  {"price.select_price":disp_priceto_char},
-                  {"price.select_price":"K"},
-                  {"price.select_price":"Lac"},
-                  {category:"RENT"}
-                ]*/
+                    ]                  
               },
               {
                 sort:{uploadedAt:-1}
               });
-            }
-            //}
-            //return bannerdb.find({category:"RENT","price.price_value":{$lte:disp_priceto_num},"price.select_price":disp_priceto_char},{sort:{uploadedAt:-1}});
+            }           
           }
           else if(disp_resi_comm != "All")
           {
@@ -633,8 +1734,265 @@ Template.home.helpers({
           else if(disp_testarea == "Area" && disp_roomtype == "Type" && disp_pricefrom == "Price From" && disp_priceto == "Price To" && disp_resi_comm == "All"){
             return bannerdb.find({category:"BUY"},{sort:{uploadedAt:-1}});
           }
+          //Start if area,roomtype,pricefrom,priceto,category
+          else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To" && disp_resi_comm != "All") {
+            if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("K and Lac and crore :");
+                return bannerdb.find(
+                {
+                  $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    }
+                    ]                
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if (disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr") {
+              console.log("l and cr");
+              return bannerdb.find({
+                $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category :"BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "K" && disp_priceto_char == "K" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }            
+            else if(disp_pricefrom_char == "K" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    },
+                    {
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category_res_comm:disp_resi_comm,
+                      location : disp_testarea,
+                      category:"BUY"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }              
+
+        } // End of if else of area,type,price from,price to and all
+          
+        // code for area & roomtype & price from & price to
+        else if (disp_testarea != "Area" && disp_roomtype != "Type" && disp_pricefrom != "Price From" && disp_priceto != "Price To") {
+          if (disp_roomtype_char == "BHK") {
+            console.log("BHK :");
+            console.log("Price from and price to :");
+            
+            if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {
+                $and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,                      
+                      location : disp_testarea,
+                      category : "BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    }
+                    ]
+                },
+                {
+                  sort:{uploadedAt:-1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              //console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    }
+                    ]                  
+              },
+              {sort:{"rooms.roomtype_value":1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }
+            ////////////////////////////////////////////
+          else{ //if room == 1RK 
+              console.log("RK and Price From :");              
+              if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Lac" || disp_pricefrom_char == "Cr" && disp_priceto_char == "Cr"){
+              console.log("Lac and crore :");
+              return bannerdb.find(
+              {$or:[
+                {$and : [
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    },
+                    {
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    }
+                    ]},
+                    { 
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":"BHK",
+                      location : disp_testarea,
+                      category : "BUY"
+                    }]
+                },
+                {
+                  sort:{"price.price_value":1}
+                }
+              );
+            }
+            else if(disp_pricefrom_char == "Lac" && disp_priceto_char == "Cr"){
+              console.log(" l and cr");
+              return bannerdb.find({
+                
+                  $or:[{
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    },
+                    {
+                      "price.select_price":disp_priceto_char,
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      location : disp_testarea,
+                      category : "BUY"
+                    }
+                    ]                  
+              },
+              {sort:{uploadedAt:-1}}
+              );
+            }
+            else{// if crore and lac selected
+              console.log("crore and lac");
+              return false;
+            }
+          }              
+
+          } // End of if else of area,type,price from,price to
+          //START of if area,type,resi_comm
           else if(disp_testarea != "Area" && disp_roomtype != "Type" && disp_resi_comm != "All"){
-            //return bannerdb.find({location:disp_testarea,"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
             if (disp_roomtype_char == "BHK") {
               return bannerdb.find({location:disp_testarea,"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category_res_comm:disp_resi_comm,category:"BUY"},{sort:{uploadedAt:-1}});
             }
@@ -651,6 +2009,228 @@ Template.home.helpers({
               {sort:{uploadedAt:-1}});
             }
           }
+          //////// Start of ELSE IF of PRICE FROM - BUY
+          else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_pricefrom != "Price From") {
+            if (disp_roomtype_char == "BHK" && disp_pricefrom != "Price From") {
+              console.log("RENT BHK :");
+              console.log("RENT Price from :");
+              if (disp_pricefrom_char == "Lac") {
+                console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char
+                              // location:disp_testarea,
+                              // "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              // "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"}
+                        ]},
+                        {
+                          location:disp_testarea,
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char,
+                          category:"BUY"
+                         }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      location:disp_testarea,
+                      "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                      "rooms.select_roomtype":disp_roomtype_char,
+                      category:"BUY"
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+            } ////////////////////////////////////////////
+            else{ //if room == 1RK 
+            
+              console.log("RENT RK and Price From :");              
+              if (disp_pricefrom_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char,                              
+                              "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Cr"},
+                            {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"BUY"}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else if (disp_pricefrom_char == "K") 
+                {
+                  console.log("K :");
+                  return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$gte:disp_pricefrom_num},
+                              "price.select_price":disp_pricefrom_char,                              
+                              "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"Lac"},
+                            {"price.select_price":"Cr"},
+                            {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"BUY"}
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$gte:disp_pricefrom_num},
+                          "price.select_price":"disp_pricefrom_char",                          
+                          "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          {"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"BUY"}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+
+          }/////////////// End of ELSE IF PRICE FROM
+
+          //////////////// Start of ELSE IF PRICE TO
+          else if (disp_testarea != "Area" && disp_roomtype !="Type" && disp_priceto != "Price To") {
+            if (disp_roomtype_char == "BHK" && disp_priceto != "Price To") {
+            //console.log("BHK :");
+            //console.log("Price To :");
+              if (disp_priceto_char == "Lac") {
+                //console.log("Lac :");
+                return bannerdb.find(
+                    { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,
+                            },
+                            {"price.select_price":"K"}
+                        ]},
+                        {
+                          location:disp_testarea,
+                          "category":"BUY"
+                          // "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          // "rooms.select_roomtype":disp_roomtype_char,                          
+                        }  
+                    ]},                    
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $or:[
+                        {"price.price_value":{$lte:disp_priceto_num},
+                        "price.select_price":disp_priceto_char,
+                        location:disp_testarea,
+                        "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                        "rooms.select_roomtype":disp_roomtype_char,
+                        category : "BUY"
+                        },
+                        {"price.select_price":"Lac",location:disp_testarea,category:"BUY"},
+                        {"price.select_price":"K",location:disp_testarea,category:"BUY"}
+                      ]
+                    },
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }            
+                //}
+            } ////////////////////////////////////////////
+            else{ //if room == 1RK 
+                        
+              console.log("RK and Price To :");              
+              if (disp_priceto_char == "Lac") {
+                  console.log("Lac :");
+                return bannerdb.find(
+                  { 
+                      $and:[                 
+                      {$or : [
+                            {
+                              "price.price_value":{$lte:disp_priceto_num},
+                              "price.select_price":disp_priceto_char,                              
+                              "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                              "rooms.select_roomtype":disp_roomtype_char,                              
+                            },
+                            {"price.select_price":"K"}                            
+                        ]},
+                        {
+                          location:disp_testarea,
+                          category:"BUY"
+                        }
+                      ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    }
+                  );
+                }
+                else{ // selecting crore 
+                  console.log("Crore :");
+                  return bannerdb.find(
+                    {
+                      $and:[
+                        {$or:[
+                          {"price.price_value":{$lte:disp_to_num},
+                          "price.select_price":disp_priceto_char,                          
+                          "rooms.roomtype_value":{$lte:disp_roomtype_number},
+                          "rooms.select_roomtype":disp_roomtype_char
+                          },
+                          //{"rooms.select_roomtype":"BHK"}
+                        ]},
+                        {location:disp_testarea,category:"BUY"}
+                    ]},
+                    {
+                      sort:{uploadedAt:-1}
+                    });
+                  }
+            }
+          } /////////// End of ELSE IF PRICE TO
+
           else if(disp_testarea != "Area" && disp_roomtype != "Type"){
             //return bannerdb.find({location:disp_testarea,rooms:disp_roomtype,category:"BUY"},{sort:{uploadedAt:-1}});
             if (disp_roomtype_char == "BHK") {
@@ -668,6 +2248,67 @@ Template.home.helpers({
                   ]},
                 {sort:{uploadedAt:-1}}
               );
+            }
+          }
+          else if (disp_testarea != "Area" && disp_pricefrom != "Price From") {
+          if (disp_pricefrom_char == "Lac") {
+            //console.log("Area and price from:")
+            return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$gte:disp_pricefrom_num},
+                      "price.select_price":disp_pricefrom_char,
+                      category:"BUY"
+                    },
+                    {location:disp_testarea,"price.select_price":"Cr",category:"BUY"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+          else{
+            return bannerdb.find(
+                {
+                  location:disp_testarea,
+                  "price.price_value":{$gte:disp_pricefrom_num},
+                  "price.select_price":disp_pricefrom_char,
+                  category:"BUY"
+                },
+                {sort:{uploadedAt:-1}
+              });
+          }
+        }
+        else if (disp_testarea != "Area" && disp_priceto != "Price To") {
+          if (disp_priceto_char == "Lac") {
+            //console.log("Area and price from:")
+            return bannerdb.find(
+                {$or:[
+                    {
+                      location:disp_testarea,
+                      "price.price_value":{$lte:disp_priceto_num},
+                      "price.select_price":disp_priceto_char,
+                      category:"BUY"
+                    },
+                    {location:disp_testarea,"price.select_price":"K",category:"BUY"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
+          }
+
+          else{ // if selected = Crore
+            return bannerdb.find(
+                {$or:[
+                  {
+                    location:disp_testarea,
+                    "price.price_value":{$lte:disp_priceto_num},
+                    "price.select_price":disp_priceto_char,
+                    category:"BUY"
+                  },
+                  {location:disp_testarea,"price.select_price":"Lac",category:"BUY"},
+                  {location:disp_testarea,"price.select_price":"K",category:"BUY"}
+                ]},
+                {sort:{uploadedAt:-1}
+              });
             }
           }
           else if(disp_testarea != "Area" && disp_resi_comm != "All"){
@@ -730,12 +2371,33 @@ Template.home.helpers({
               //}
             }
             else{
-            console.log("No data");
+              console.log("No data");
             }
           }
           else if(disp_roomtype != "Type")
           {
-            return bannerdb.find({"rooms.roomtype_value":{$gte:disp_roomtype_number},"rooms.select_roomtype":disp_roomtype_char,category:"BUY"},{sort:{uploadedAt:-1}});
+            if (disp_roomtype_char == "RK") {
+            return bannerdb.find(
+              { $or:[
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                  category:"BUY"
+                },
+                {"rooms.select_roomtype":"BHK",category:"BUY"},
+                //{"rooms.select_roomtype":"Cr",category:"BUY"}
+              ]},
+              {sort:{uploadedAt:-1}});
+            }
+            else{
+              return bannerdb.find(
+                {
+                  "rooms.roomtype_value":{$gte:disp_roomtype_number},
+                  "rooms.select_roomtype":disp_roomtype_char,
+                  category:"BUY"
+                },                
+              {sort:{uploadedAt:-1}});
+            }            
           }
           else if(disp_pricefrom != "Price From")
           {
@@ -850,14 +2512,7 @@ Template.home.helpers({
                         {"price.select_price":"K"}
                       ]},
                       {category:"BUY"} 
-                    ]
-                    /*$or:[
-                      {"price.price_value":{$lte:disp_priceto_num}},
-                      {"price.select_price":disp_priceto_char},
-                      {"price.select_price":"Lac"},
-                      {"price.select_price":"Cr"},
-                      {category : "BUY"}
-                    ]*/
+                    ]                   
                   },
                   {
                     sort : {uploadedAt:-1}
@@ -890,24 +2545,7 @@ Template.home.helpers({
        // for (var i = 0; i < arearesult.area.length; i++) {
        //     return arearesult.area[i];
        // }
-    },
-    /*'area1':function(e){
-      // var $this = $(e.target);
-      // var id = $(this.id);
-      var a = searchuidb.findOne({});
-      // for (var i = 0; i < a.area.length; i++) {
-      //   return a.area[i];
-      // }
-      //return a.area[1];
-      //return ["Khopoli","Vashi"];
-      var r =  searchuidb.find({},{_id:0,area:1}).map(function (i){return i.area});
-      /*var split_r = r.split(",");
-      console.log(split_r);*/
-      /*for (var i = 0; i < r.length; i++) {
-        return r[i];
-      }*/
-      //return r;
-    //},
+    },    
     'room_type' :function(){
       var roomtype = searchuidb.findOne({},{_id:0,roomType:1});
       return roomtype.roomType;

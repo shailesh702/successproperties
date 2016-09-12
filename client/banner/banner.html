@@ -78,9 +78,10 @@
             <!-- <span style="margin-left:23px;">:</span> -->
             
             <!-- <i class="fa fa-rupee" style="color:black;left:145px;top:0px;position:absolute;"></i> -->
-            <img src="/images/rupee-symbol.png" style="color:black;left:145px;top:0px;position:absolute;height:15px;">
+            <img src="/images/rupee-symbol.png" style="color:black;left:145px;top:0px;position:absolute;height:15px;margin:0px;">
             <span style="position:absolute;color:black;left:162px;top:-3px;">:</span>
-            <span id="banner_price" style="position:absolute;color:black;left:175px;top:-3px;font-size: 16px;font-family: helvetica rounded;"> {{price.price_value}} {{price.select_price}}</span>
+            <span id="banner_price" style="position:absolute;color:black;left:175px;top:-3px;font-size: 16px;font-family: helvetica rounded;"> {{price.price_value}}</span> 
+            <span id="banner_price_char" style="position:absolute;color:black;left:195px;top:-1px;font-family: helvetica rounded;">{{price.select_price}}</span>
             
             
         </li>
@@ -91,26 +92,26 @@
           <span id="banner_price" style=""> {{price.select_price}}</span>
         </li>-->
         <li style="margin-top: 5px;">
-          <span style="color:black;font-size: 16px;font-family: helvetica rounded;">Rooms <span style="margin-left:36px;">:</span></span>
-          <span id="banner_rooms" style=""> {{rooms.roomtype_value}}</span>
-          <span id="banner_rooms_type" style=""> {{rooms.select_roomtype}}</span>
+          <span style="color:black;font-size: 14px;font-family: helvetica rounded;">Rooms <span style="margin-left:36px;">:</span></span>
+          <span id="banner_rooms" style="color: black;font-family: helvetica rounded;"> {{rooms.roomtype_value}}</span>
+          <span id="banner_rooms_type" style="color: black;font-family: helvetica rounded;"> {{rooms.select_roomtype}}</span>
         </li>
         <li style="margin-top: 5px;">
-            <span style="font-weight: bold;color:gray;font-size: 16px;">Sq/Fts <span style="margin-left:40px;">:</span></span>
-            <span id="banner_sq_ft" style=""> {{sq_ft}}</span>
+            <span style="color:black;font-size: 14px;font-family: helvetica rounded;">Area <span style="margin-left:40px;">:</span></span>
+            <span id="banner_sq_ft" style="color: black;font-family: helvetica rounded;"> {{sq_ft}}</span>
         </li>
         <li style="margin-top: 5px;">
-            <span style="font-weight: bold;color:gray;font-size: 16px;">Category <span style="margin-left:20px;">:</span></span>
-            <span id="banner_res_comm" style=""> {{category_res_comm}}</span>
+            <span style="color:black;font-size: 14px;font-family: helvetica rounded;">Category <span style="margin-left:20px;">:</span></span>
+            <span id="banner_res_comm" style="color: black;font-family: helvetica rounded;"> {{category_res_comm}}</span>
         </li>
         <li style="margin-top: 5px;">
-            <span style="font-weight: bold;color:gray;font-size: 16px;">Description :</span>
-            <span id="banner_description">{{description}}</span>
+            <span style="color:black;font-size: 14px;font-family: helvetica rounded;">Description :</span>
+            <span id="banner_description" style="color: black;font-size: 14px;font-family: helvetica rounded;">{{description}}</span>
         </li>
         {{#if currentUser}}
         <div id="update_delete_option" style="margin-top: 5px;position:absolute;bottom:1px;left:1px;width:100px;height: 30px;padding-left:20px;">
             <span class="glyphicon glyphicon-remove"></span>
-            <a href="#" class="glyphicon glyphicon-pencil"></a>
+            <span id="glyphicon_pencil" class="glyphicon glyphicon-pencil"></span>
         </div>
         {{/if}}
         <a href="/contact"><div style="margin-top: 5px;position:absolute;bottom:1px;right:1px;width:100px;height: 30px;border-radius:0px 0px 20px 0px;background-color:#3A539B;text-indent:5px;box-shadow:-2px -2px 2px gray;">

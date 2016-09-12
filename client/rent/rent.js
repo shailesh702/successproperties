@@ -3,6 +3,7 @@ Template.rent.onCreated(function(){
     var self= this;
     this.autorun( function() {
         self.subscribe('bannerdb');
+        self.subscribe('searchuidb');
     });
 });
 
