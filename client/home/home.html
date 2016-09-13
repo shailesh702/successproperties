@@ -57,7 +57,26 @@
 </div>
 <!-- End of Coraousel Effect -->
 <!-- Start of Search UI -->
-<div class="container-fluid" style="margin:20px 100px 0px 100px;">
+    {{> searchuipanel}}
+<!-- End of Search ui -->
+<div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
+    <ul id="imgdesc" style="list-style-type: none;margin:0px 20px;padding:0px 0px 0px 20px;">
+    {{#if bannercontent}}
+    <!-- <p>Results Found are:</p> -->
+      {{#each bannercontent}}         
+        {{> banner}}
+      {{/each}}
+    {{else}}
+          <p>no data found</p>
+    {{/if}}
+
+    </ul>
+</div>
+{{> ads}}
+</template>
+
+<template name = "searchuipanel">
+    <div class="container-fluid" style="margin:20px 100px 0px 100px;">
   <form role="form">
     <fieldset>
       <a href="#" class="btn btn-primary" id="btn_rent" role="button" style="background-color:#3A539B;">RENT</a>
@@ -162,22 +181,7 @@
           </div>
         </div>
       </div>
-  </fieldset> 
-</form>  
-</div>    
-<!-- End of Search ui -->
-<div id="bussiness" style="margin-bottom:200px;height: auto;width: 100%;">
-    <ul id="imgdesc" style="list-style-type: none;margin:0px 20px;padding:0px 0px 0px 20px;">
-    {{#if bannercontent}}
-    <!-- <p>Results Found are:</p> -->
-      {{#each bannercontent}}         
-        {{> banner}}
-      {{/each}}
-    {{else}}
-          <p>no data found</p>
-    {{/if}}
-
-    </ul>
-</div>
-{{> ads}}
-</template>
+    </fieldset> 
+    </form>  
+    </div>
+</template> 

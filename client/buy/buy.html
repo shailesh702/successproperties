@@ -1,6 +1,9 @@
 <template name="buy">
 
-	{{> search_ui}}
+	<!-- <div class="container-fluid" style="margin:50px 50px 50px 50px;border:1px solid black;"> -->
+		{{> searchuibuy}}
+	<!-- </div> -->
+	<!-- {{> searchuipanel}} -->
 	<hr>
 
 	<!--{{> buy_properties}}-->
@@ -16,7 +19,7 @@
 	{{> ads}}
 </template>
 
-<template name="search_ui">
+<!-- <template name="searchuibuy">
 <div class="container-fluid" style="margin:50px 100px 0px 100px;">
 	<form role="form">
 	<fieldset>
@@ -72,4 +75,101 @@
 	</fieldset>	
 	</form> 	
 </div>
+</template>
+ -->
+
+ <template name = "searchuibuy">
+    <div class="container-fluid" style="margin:50px 100px 0px 100px;">
+  <form role="form">
+    <fieldset>
+      
+      <a href="#" class="btn btn-primary" id="btn_rent_buy" role="button" style="margin-left: -2px;background-color:#3A539B;">{{buy_helper}}</a>
+                   
+      <div class="panel panel-primary" style="padding:10px;background-color: #eff1f9">      
+        <div class="panel-body">
+          <div class="row" style="">
+            <div class="form-group">              
+              
+              <div class="col-sm-2">
+                <label class="sr-only" for="Area"></label>
+                <select class="form-control" id="area_wise_filter">
+                  <option selected="selected">Area</option>
+                    {{#each areas}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  <!--<option>Area</option>
+                  <option>Navi Mumbai</option>
+                  <option>Khopoli</option>-->
+                </select>
+              </div>
+            
+              <div class="col-sm-2">
+                <label class="sr-only" for="Room_Type"></label>
+                <select class="form-control" id="room_type_filter">
+                  <option selected="selected">Type</option>
+                    {{#each room_type}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  
+                </select>
+              </div>
+
+              <div class="col-sm-2">
+                <label class="sr-only" for="price_from"></label>
+                <select class="form-control" id="price_from_filter">
+                  <option selected="selected">Price From</option>
+                  <!--<option>1 lac</option>-->
+                  <!--{{#if pricefrom}} -->
+                    {{#each pricefrom}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+
+                  <!--{{else}}
+                    {{#each bpriceFrom}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  {{/if}}-->
+                </select>
+              </div>
+
+              <div class="col-sm-2">
+                <label class="sr-only" for="price_to"></label>
+                <select class="form-control" id="price_to_filter">
+                  <option selected="selected">Price To</option>
+                  <!--{{#if priceto}}-->
+                    {{#each priceto}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  <!--{{else}}
+                    {{#each bpriceTo}}
+                      <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                  {{/if}}-->
+                  <!--<option>1 cr</option>-->
+                </select>                  
+              </div>
+
+              <div class="col-sm-2">
+                <label class="sr-only" for="property_category"></label>    
+                <select class="form-control" id="resi_commercial">
+                  <option selected="selected" >All</option>
+                  {{#each rescomm}}
+                    <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                  <!--<option>Residential</option>
+                  <option>Commercial</option>-->
+                </select>
+              </div>
+
+              <div class="col-sm-2"> <!--col-md-offset-2">-->
+                <label class="sr-only" for="search"></label>
+                <button type="submit" id="search_btnbuy" class="btn btn-primary" style="background-color:#3A539B;" >Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset> 
+    </form>  
+    </div>
 </template>
